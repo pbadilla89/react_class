@@ -2,28 +2,13 @@ import React, { Component } from 'react';
 
 import RowComponent from './RowComponent';
 
- class TableComponent extends Component {
+ const TableComponent = (props) => {
 
-    
-    constructor(props){
-        super(props)
 
-        this.state = {
-            useRing: false
-        }
+    let {characters, isUsingRing, clickAction} = props
 
-        this.changeRing = this.changeRing.bind(this)
-    }
-
-    changeRing(use){
-        this.setState({
-            useRing: use
-        })
-    }
-
-    render(){
-        let {characters} = this.props
-        return (
+    return (
+        <>
             <table className="characters-table">
                 <thead>
                     <tr className="character-row">
@@ -38,14 +23,15 @@ import RowComponent from './RowComponent';
                 {
                     characters.map((char, key) => {
                     return (
-                        <RowComponent key={key} name={char.name} race={char.race} age={char.age} weapon={char.weapon} useRing={this.state.useRing} changeRing={this.changeRing}/>
+                        <RowComponent key={key} char={char} idActual={key} clickAction={clickAction} isUsingRing={isUsingRing}/>
                     )
                     })
                 }
                 </tbody>
             </table>
-        )
-    }
+            <div onClick={(e) => { clickAction("giveBack") } }> Give Back Ring </div>
+        </>
+    )
 }
 
 export default TableComponent

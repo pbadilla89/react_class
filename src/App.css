@@ -45,9 +45,8 @@ table {
 }
 .disabled {
   text-decoration: line-through;
-  pointer-events: none;
   opacity: 0.5;
 }
 .married{
-  display: none;
+  background-color: green;
 }

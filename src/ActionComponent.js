@@ -1,12 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const ActionComponent = ({useRing, clickAction, ringMe}) => {
+const ActionComponent = ({isUsingRing, clickAction, usingRing, killMe, idActual}) => {
     return (
         <div className="controls" >
-            <div onClick={(e) => { clickAction("kill") } }>☠ Kill</div>
-            { ringMe?
-                (<div>💍 Used Ring</div>)
-                : useRing? "" : (<div onClick={(e) => { clickAction("ring") } }>💍 Use Ring</div>)
+            { !usingRing?
+                killMe? 
+                    (<div style={{textDecoration: "none"}} onClick={(e) => { clickAction("revive", idActual) } }> To Revive </div>) 
+                : (
+                    <div onClick={(e) => { clickAction("kill", idActual) } }>☠ Kill</div>
+                ) : ""
+            }
+            { !killMe?
+                usingRing?
+                    (<div >💍 Used Ring</div>)
+                    : isUsingRing? "" : (<div onClick={(e) => { clickAction("ring",idActual) } }>💍 Use Ring</div>)
+                : ""
             }
         </div>
     )
