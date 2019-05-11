@@ -2,27 +2,10 @@ import React, { Component } from 'react';
 
 import RowComponent from './RowComponent';
 
-import MyContext from './context/myContext'
-
- const TableComponent = (props) => {
-
-    return (
-        <MyContext.Consumer>
-            {context => {
-
-                let { newState, handleChange, clickAction } = context
-
+ const TableComponent = ( { newState } ) => {
                     
 
-                let { inputFilter, characters, isUsingRing, thisUseId, placeholder} = newState
-
-                let filtered =  characters
-
-                if(filtered){
-                    filtered = characters.filter(ff => {
-                        return ff.name.toLowerCase().includes(inputFilter.toLowerCase()) | ff.race.toLowerCase().includes(inputFilter.toLowerCase())
-                    })
-                }
+                let { inputFilter, characters, isUsingRing, thisUseId, placeholder, handleChange, clickAction} = newState
 
                 return(
                 <>
@@ -48,10 +31,8 @@ import MyContext from './context/myContext'
                 </table>
                 <div onClick={(e) => { clickAction("giveBack") } }> Give Back Ring </div>
                 </>
-            )}
+            )
         }
-        </MyContext.Consumer>
-    )
-}
+
 
 export default TableComponent
