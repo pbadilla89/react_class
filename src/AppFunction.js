@@ -4,6 +4,7 @@ import TableComponent from './TableComponent';
 import FilterComponent from './FilterComponent';
 
 import useCharacter from './hooks/useCharacter'
+import MyContext from './context/myContext'
 
 const AppFunction = () => {
     let myState = {
@@ -26,24 +27,25 @@ const AppFunction = () => {
 
     let { inputFilter, characters, isUsingRing, thisUseId, placeholder} = newState
 
-    console.log(characters)
     let filtered =  characters
 
     if(filtered){
-      filtered = characters.filter(ff => {
-        return ff.name.toLowerCase().includes(inputFilter.toLowerCase()) | ff.race.toLowerCase().includes(inputFilter.toLowerCase())
-      })
+        filtered = characters.filter(ff => {
+            return ff.name.toLowerCase().includes(inputFilter.toLowerCase()) | ff.race.toLowerCase().includes(inputFilter.toLowerCase())
+        })
     }
 
     return (
       <div className="index">
         <h2>Fellowship of the Ring</h2>
   
-        <div className="container">
-          <FilterComponent val={inputFilter} handleChange={handleChange} placeholder={placeholder}/>
-          {filtered.length > 0 && <TableComponent characters={filtered} isUsingRing={isUsingRing} thisUseId={thisUseId} clickAction={clickAction}/>}
-          {filtered.length === 0 && <div>No Hay Registros</div>}
-        </div>
+        <MyContext.Provider value={useCharacter(myState)} >
+          <div className="container">
+            <FilterComponent val={inputFilter} handleChange={handleChange} placeholder={placeholder}/>
+            {filtered.length > 0 && <TableComponent />}
+            {filtered.length === 0 && <div>No Hay Registros</div>}
+          </div>
+        </MyContext.Provider>
       </div>
     )
 }
