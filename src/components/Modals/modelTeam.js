@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
 
 import useForm from '../../hooks/useForm'
@@ -10,9 +9,9 @@ const formState = {
     country: ""
 }
 
-const ModalTeam = () => {
+const ModalTeam = ({ addTeam }) => {
    
-    const { values, onOpenModal, onCloseModal, handleInputChange, saveTeam } = useForm(formState);
+    const { values, onOpenModal, onCloseModal, handleInputChange, saveTeam } = useForm(formState, addTeam);
     return (
         <>
             <button onClick={onOpenModal}>Agregar Equipo</button>

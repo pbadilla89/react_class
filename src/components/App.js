@@ -7,18 +7,32 @@ import { addTeam } from '../redux/all/teams'
 
 import ModalTeam from './Modals/modelTeam'
 
+import Table from './table/table'
+
 
 
 const App = (props) => {
 
-  console.log(props)
+  const { addTeam, TeamsReducer } = props
 
-  const { } = props
+  let { teams, headers } =  TeamsReducer
 
   return (
-    <div className="container">
-        <ModalTeam/>
-    </div>
+    <>
+      <div className="container">
+          <ModalTeam addTeam={addTeam}/>
+      </div>
+
+      <div className="container">
+        <label> Tabla de Posiciones </label>
+        <Table list={teams} headers={headers} />
+      </div>
+
+      <div className="container">
+        <label> Partidos </label>
+        <Table list={teams} headers={headers} />
+      </div>
+    </>
   );
 }
 

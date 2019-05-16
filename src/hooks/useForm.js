@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const useForm = (initialValues, cb = () => {}) => {
   const [values, setValues] = useState(initialValues)
@@ -6,7 +6,6 @@ const useForm = (initialValues, cb = () => {}) => {
   const handleInputChange = event => {
     const id = event.target.id
     const value = event.target.value
-    console.log("sasdsdasdadsasd")
 
     setValues({
       ...values,
@@ -16,8 +15,7 @@ const useForm = (initialValues, cb = () => {}) => {
 
   const saveTeam = event => {
     event.preventDefault()
-
-    cb()    
+    cb(values)
   }
 
   const onOpenModal = () => {
