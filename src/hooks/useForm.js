@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const useForm = (initialValues, cb = () => {}) => {
+const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null, cb4 = null) => {
   const [values, setValues] = useState(initialValues)
 
   const handleInputChange = event => {
@@ -13,15 +13,36 @@ const useForm = (initialValues, cb = () => {}) => {
     })
   }
 
-  const saveTeam = event => {
-    event.preventDefault()
-    cb(values)
+  const save = props => {
+    if(values.action === "add"){
+      cb(values)
+    } else if(values.action === "edit") {
+      cb2(values)
+    } else if(values.action === "delete") {
+      cb3(values)
+    } 
+    
   }
 
-  const onOpenModal = () => {
+  const onOpenModal = ( action, lst ) => {
+
+    let { name, country  } = values
+
+    if( typeof lst != "undefined" ){
+      name = lst.name
+      country = lst.country
+    } else {
+      name = ""
+      country = ""
+    }
+
     setValues({
       ...values,
-      openModal: true
+      name,
+      lst,
+      country,
+      openModal: true,
+      action
     })
   }
  
@@ -32,12 +53,38 @@ const useForm = (initialValues, cb = () => {}) => {
     })
   }
 
+  const saveMatch = props => {
+    cb4(values, props)
+    onCloseModalMatch()
+  }
+
+  const onOpenModalMatch = ( lst, indLst ) => {
+    setValues({
+      ...values,
+      openModalMatch: true,
+      lst,
+      indLst,
+      home: lst.home,
+      away: lst.away
+    })
+  }
+ 
+  const onCloseModalMatch = props => {
+    setValues({
+      ...values,
+      openModalMatch: false
+    })
+  }
+
   return {
     values,
     handleInputChange,
-    saveTeam,
+    save,
     onOpenModal,
-    onCloseModal
+    onCloseModal,
+    saveMatch,
+    onOpenModalMatch,
+    onCloseModalMatch
   }
 }
 
