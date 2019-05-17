@@ -77,8 +77,6 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null, cb4 = nul
   }
 
   const validate = () => {
-    console.log(values)
-    console.log("values")
 
     if( values.action !== "delete" && values.name !== "" && values.country !== "" ){
       save()

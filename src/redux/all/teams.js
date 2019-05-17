@@ -61,7 +61,6 @@ export const removeTeam = ( values ) => {
 }
 
 export const refreshMatch = () => {
-    console.log("vvrgvggbgrb")
     return ({
         type: REFRESH_MATCH,
         payload: {
@@ -128,10 +127,17 @@ export default (state = initialState, action) => {
             let last_remove = state.teams.filter( (team) => team.id !== values.lst.id )
 
             last_remove = last_remove.map( ( lr, indLr ) => {
-                lr.id = String( indLr+1 )
-                lr.pos = indLr+1
 
-                return lr
+                return {
+                    ...lr,
+                    pts: 0,
+                    pj: 0,
+                    pg: 0,
+                    pe: 0,
+                    pp: 0,
+                    id: String( indLr+1 ),
+                    pos: indLr+1
+                }
             } )
             
             state = {
@@ -164,12 +170,7 @@ export default (state = initialState, action) => {
             teams.map( ( tms ) => {
                 teams.map( ( tms2 ) => {
 
-                    let founded = false
-                    matches.map( ( mtc ) => {
-                        if( tms.id === tms2.id ){
-                            founded = true
-                        }
-                    } )
+                    let founded = tms.id === tms2.id? true : false
 
                     if(!founded){
                         state = {
@@ -215,7 +216,6 @@ export default (state = initialState, action) => {
                 }
             } )
 
-            console.log(play)
             let newTeams = state.teams.map( ( tms, indTms ) => {
 
                 let points = tied.includes(tms.id) ? tms.pts+1 : win.includes(tms.id)  ? tms.pts+3 : tms.pts
