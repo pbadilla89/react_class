@@ -7,11 +7,12 @@ const PLAY_MATCH = 'PLAY_MATCH'
 
 const initialState = {
     teams: [
-        { id: '1', name: 'Manchester United', pos: 1, country: "Inglaterra", pj: 0, pg: 0, pe: 0, pp: 0 },
-        { id: '2', name: 'Manchester City', pos: 2, country: "Inglaterra", pj: 0, pg: 0, pe: 0, pp: 0 }
+        { id: '1', name: 'Manchester United', pos: 1, pts: 0, country: "Inglaterra", pj: 0, pg: 0, pe: 0, pp: 0 },
+        { id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "Inglaterra", pj: 0, pg: 0, pe: 0, pp: 0 }
     ],
     headerTeam: [
         { id: "pos", label: "Pos" },
+        { id: "pts", label: "Puntos" },
         { id: "name", label: "Nombre" },
         { id: "pj", label: "Partidos Jugados" },
         { id: "pg", label: "Partidos Ganados" },
@@ -97,7 +98,7 @@ export default (state = initialState, action) => {
                 ...state,
                 teams:[
                     ...state.teams,
-                    { id: String(state.teams.length+1), name, pos: (state.teams.length+1), country, pg: 0, pe: 0, pp: 0 }
+                    { id: String(state.teams.length+1), name, pos: (state.teams.length+1), country, pg: 0, pe: 0, pp: 0, pts: 0, pj: 0 }
                 ]
             }
 
@@ -146,10 +147,11 @@ export default (state = initialState, action) => {
             let newTms = teams.map( ( tms, indTms ) => {
                 return {
                     ...tms,
+                    pts: 0,
                     pj: 0,
-                            pg: 0,
-                            pe: 0,
-                            pp: 0
+                    pg: 0,
+                    pe: 0,
+                    pp: 0
                 }
             })
 
@@ -215,21 +217,31 @@ export default (state = initialState, action) => {
 
             console.log(play)
             let newTeams = state.teams.map( ( tms, indTms ) => {
+
+                let points = tied.includes(tms.id) ? tms.pts+1 : win.includes(tms.id)  ? tms.pts+3 : tms.pts
+                
                 return {
                     ...tms,
                     pj: play.includes(tms.id) ? tms.pj+1 : tms.pj,
                     pe: tied.includes(tms.id) ? tms.pe+1 : tms.pe,
                     pg: win.includes(tms.id)  ? tms.pg+1 : tms.pg,
-                    pp: lose.includes(tms.id)  ? tms.pp+1 : tms.pp
+                    pp: lose.includes(tms.id)  ? tms.pp+1 : tms.pp,
+
+                    pts: points
                 }
             } )
 
-            console.log(newTeams)
+            let inOrder = newTeams.sort((a, b) => (a.pts < b.pts) ? 1 : -1)
+
+            inOrder = inOrder.map( (tms, indTms) => {
+                return { ...tms, pos: indTms+1 }
+            } )
+            
 
             state = {
                 ...state,
                 matches: newMatches,
-                teams: newTeams
+                teams: inOrder
             }
 
             return state

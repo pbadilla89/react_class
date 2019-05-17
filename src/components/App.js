@@ -17,20 +17,21 @@ const formState = {
   name: "",
   country: "",
   action: "add",
-  openModalMatch: false
+  openModalMatch: false,
+  is_valid: true
 }
 
 const App = (props) => {
 
   const { addTeam, editTeam, removeTeam, refreshMatch, playMatch, listTeam, headerTeam, listMarch, headerMatch} = props
 
-  const { values, onOpenModal, onCloseModal, handleInputChange, save, onCloseModalMatch, saveMatch, onOpenModalMatch } = useForm(formState, addTeam, editTeam, removeTeam, playMatch);
+  const { values, onOpenModal, onCloseModal, handleInputChange, save, onCloseModalMatch, saveMatch, onOpenModalMatch, validate } = useForm(formState, addTeam, editTeam, removeTeam, playMatch);
 
   return (
     <>
       <div className="container">
         <button className="btn btn-primary" onClick={ () => { onOpenModal("add") } }>Agregar Equipo</button>
-        <ModalTeam forms={{ values, onCloseModal, handleInputChange, save }} />
+        <ModalTeam forms={{ values, onCloseModal, handleInputChange, validate }} />
       </div>
 
       <div className="container">
