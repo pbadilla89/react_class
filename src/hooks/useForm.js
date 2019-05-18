@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null, cb4 = null) => {
+const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
   const [values, setValues] = useState(initialValues)
 
   const handleInputChange = event => {
@@ -53,29 +53,6 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null, cb4 = nul
     })
   }
 
-  const saveMatch = props => {
-    cb4(values, props)
-    onCloseModalMatch()
-  }
-
-  const onOpenModalMatch = ( lst, indLst ) => {
-    setValues({
-      ...values,
-      openModalMatch: true,
-      lst,
-      indLst,
-      home: lst.home,
-      away: lst.away
-    })
-  }
- 
-  const onCloseModalMatch = props => {
-    setValues({
-      ...values,
-      openModalMatch: false
-    })
-  }
-
   const validate = () => {
 
     if( values.action !== "delete" && values.name !== "" && values.country !== "" ){
@@ -110,9 +87,6 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null, cb4 = nul
     save,
     onOpenModal,
     onCloseModal,
-    saveMatch,
-    onOpenModalMatch,
-    onCloseModalMatch,
     validate
   }
 }
