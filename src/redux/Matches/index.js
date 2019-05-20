@@ -1,17 +1,15 @@
 const REFRESH_MATCH = 'REFRESH_MATCH'
 const PLAY_MATCH = 'PLAY_MATCH'
-const REMOVE_TEAM = 'REMOVE_TEAM'
-const ADD_TEAM = 'ADD_TEAM'
 
 const initialState = {
-    matches: [
-        { id:"1", idHome: "1", idAway: "2", win: "-1" },
-        { id:"2", idHome: "2", idAway: "1", win: "-1" }
-    ],
-    headerMatch: [
-        { id:"home", label: "Equipo Local" },
-        { id:"away", label: "Equipo Visita" }
-    ]
+matches: [
+    { id:"1", idHome: "1", idAway: "2", win: "-1" },
+    { id:"2", idHome: "2", idAway: "1", win: "-1" }
+],
+headerMatch: [
+    { id:"home", label: "Equipo Local" },
+    { id:"away", label: "Equipo Visita" }
+]
 }
 
 export const refreshMatch = () => {
@@ -74,18 +72,6 @@ export default (state = initialState, action) => {
             play,
             win,
             lose
-          }
-        }
-        case REMOVE_TEAM:{
-          return {
-            ...state,
-            matches: []
-          }
-        }
-        case ADD_TEAM:{
-          return {
-            ...state,
-            matches: []
           }
         }
         default: return state

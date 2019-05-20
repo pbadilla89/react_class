@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
 
-
 const ModalTeam = ({ forms }) => {
 
 
@@ -17,13 +16,27 @@ const ModalTeam = ({ forms }) => {
                             <div className="form-row">
                                 <div className="col-md-4 mb-3">
                                     <label >Nombre</label>
-                                    <input className="form-control" value={values.name} id="name" onChange={handleInputChange} />
+                                    <input 
+                                        className="form-control"
+                                        value={values.name}
+                                        onChange={(e) => { handleInputChange(e.target.value,"name") }} />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
                                     <label >Pais</label>
-                                    <input className="form-control" value={values.country} id="country" onChange={handleInputChange} />
+                                    <select
+                                        className="form-control"
+                                        value={values.country}
+                                        onChange={(e) => { handleInputChange(e.target.value,"country") }} >
+                                        <option value=""> Seleccione </option>
+                                        { values.countries.map( (cntr) => {
+                                            return (
+                                                <option key={cntr.id} value={cntr.id}> {cntr.name} </option>
+                                            )
+                                        } ) }
+                                        
+                                    </select>
                                 </div>
                             </div></>
                          ) : (

@@ -8,6 +8,7 @@ import ModalMatch from '../../components/Modals/modalMatch'
 import Table from '../../components/Table'
 
 import useMatch from '../../hooks/useMatch'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const formState = {
   openModalMatch: false,
@@ -21,14 +22,17 @@ const Matches = (props) => {
 
   const { matches, headerMatch } = MatchesReducer
 
-  return (
+  return ( <>
     <div className="container">
-      <button className="btn btn-primary" onClick={ () => { refreshMatch() } }>Reiniciar</button>
+      <button className="btn btn-success w-100" onClick={ () => { refreshMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
+    </div>
+    <div className="container">
       <label className="form-control"> Partidos </label>
       <Table list={matches} headers={headerMatch} action="Mathes" forms={{ values, onOpenModalMatch, onCloseModalMatch, saveMatch }} />
 
       <ModalMatch forms={{ values, onCloseModalMatch, saveMatch }} />
     </div>
+    </>
   )
 }
 

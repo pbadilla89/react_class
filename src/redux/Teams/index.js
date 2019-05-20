@@ -4,8 +4,8 @@ const EDIT_TEAM = 'EDIT_TEAM'
 
 const initialState = {
     teams: [
-        { id: '1', name: 'Manchester United', pos: 1, pts: 0, country: "Inglaterra", pj: 0, pg: 0, pe: 0, pp: 0 },
-        { id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "Inglaterra", pj: 0, pg: 0, pe: 0, pp: 0 }
+        { id: '1', name: 'Manchester United', pos: 1, pts: 0, country: "1", pj: 0, pg: 0, pe: 0, pp: 0 },
+        { id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "1", pj: 0, pg: 0, pe: 0, pp: 0 }
     ],
     headerTeam: [
         { id: "pos", label: "Pos" },
@@ -79,18 +79,18 @@ export default (state = initialState, action) => {
             }
         }
         case EDIT_TEAM:{
-            let { values } = action.payload
+            let { lst, name, country } = action.payload.values
 
-            let last_edit = state.teams.map( ( team, indTeam ) => {
-                let name = team.name
-                let country = team.country
+            let last_edit = state.teams.map( ( team ) => {
+                let oldName = team.name
+                let oldCountry = team.country
 
-                if( team.id === values.lst.id ){
-                    name = values.name
-                    country = values.country
+                if( team.id === lst.id ){
+                    oldName = name
+                    oldCountry = country
                 }
 
-                return {...team, name, country}
+                return {...team, name: oldName, country: oldCountry}
             } )
             
             return {
@@ -99,9 +99,9 @@ export default (state = initialState, action) => {
             }
         }
         case REMOVE_TEAM:{
-            let { values } = action.payload
+            let { lst } = action.payload.values
 
-            let last_remove = state.teams.filter( (team) => team.id !== values.lst.id )
+            let last_remove = state.teams.filter( (team) => team.id !== lst.id )
 
             last_remove = last_remove.map( ( lr, indLr ) => {
 

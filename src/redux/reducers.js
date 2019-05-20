@@ -2,15 +2,13 @@ import { combineReducers } from 'redux'
 
 import TeamsReducer from './Teams'
 import MatchesReducer from './Matches'
+import CountriesReducer from './Countries'
 import crossSliceReducer from './CrossSlice'
-
-
-const REFRESH_MATCH = 'REFRESH_MATCH'
-const PLAY_MATCH = 'PLAY_MATCH'
 
 const combinedReducer = combineReducers({
   TeamsReducer,
-  MatchesReducer
+  MatchesReducer,
+  CountriesReducer
 })
 
 const rootReducer = (state, action) => {

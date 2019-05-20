@@ -1,6 +1,7 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Table = ({ list = [], headers = [], forms, action }) => {
+const Table = ({ list = [], headers = [], forms, action, minList = 1 }) => {
 
   return (
     <table className="table">
@@ -27,12 +28,13 @@ const Table = ({ list = [], headers = [], forms, action }) => {
                 } )
               }
               <td > 
-                { action === "position" ? (<>
-                    <button onClick={ () => { forms.onOpenModal("edit", lst) } }>Editar Equipo</button>
-                    <button className={ `${list.length <= 2 ? "d-none": "" }` } onClick={ () => { forms.onOpenModal("delete", lst) } }>Eliminar Equipo</button>
-                  </>)
+                { action === "position" ? (
+                  <div className="btn-group d-flex" role="group">
+                    <button className={ `btn btn-warning w-100` } onClick={ () => { forms.onOpenModal("edit", lst) } }> <FontAwesomeIcon icon={["fas", "pencil-alt"]} /> </button>
+                    <button className={ `btn btn-danger w-100 ${list.length <= minList ? "d-none": "" }` } onClick={ () => { forms.onOpenModal("delete", lst) } }> <FontAwesomeIcon icon={["far", "trash-alt"]} /> </button>
+                  </div>)
                   :(
-                  <button className={ `${lst.win >= 0 ? "d-none": "" }` } onClick={ () => { forms.onOpenModalMatch( lst, indLst ) } } >Jugar Partido</button>)
+                  <button className={ `btn btn-info ${lst.win >= 0 ? "d-none": "" }` } onClick={ () => { forms.onOpenModalMatch( lst, indLst ) } } >Jugar Partido</button>)
                 }
               </td>
             </tr>

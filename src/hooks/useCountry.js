@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
-const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
+const useCountry = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
   const [values, setValues] = useState(initialValues)
 
-  const handleInputChange = (value, id) => {
-    console.log(value)
+  const handleInputChange = event => {
+    const id = event.target.id
+    const value = event.target.value
 
     setValues({
       ...values,
@@ -25,21 +26,18 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
 
   const onOpenModal = ( action, lst ) => {
 
-    let { name, country  } = values
+    let { name  } = values
 
     if( typeof lst != "undefined" ){
       name = lst.name
-      country = lst.country
     } else {
       name = ""
-      country = ""
     }
 
     setValues({
       ...values,
       name,
       lst,
-      country,
       openModal: true,
       action
     })
@@ -54,7 +52,7 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
 
   const validate = () => {
 
-    if( values.action !== "delete" && values.name !== "" && values.country !== "" ){
+    if( values.action !== "delete" && values.name !== ""){
       save()
       
       setValues({
@@ -90,4 +88,4 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
   }
 }
 
-export default useForm
+export default useCountry

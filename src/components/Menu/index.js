@@ -20,6 +20,11 @@ const Menu = () => {
               Matches
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/paices">
+              Countries
+            </NavLink>
+          </li>
         </ul>
       </div>
     </nav>

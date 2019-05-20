@@ -1,5 +1,7 @@
 const REFRESH_MATCH = 'REFRESH_MATCH'
 const PLAY_MATCH = 'PLAY_MATCH'
+const REMOVE_TEAM = 'REMOVE_TEAM'
+const ADD_TEAM = 'ADD_TEAM'
 
 const calculateScore = ( { tied, play, win, lose, tms } ) => {
   return {
@@ -13,10 +15,16 @@ const calculateScore = ( { tied, play, win, lose, tms } ) => {
 }
 
 const crossSliceReducer = (state, action) => {
-  switch (action.type) {
+  let now_type = action.type
+
+  now_type = now_type === REMOVE_TEAM? REFRESH_MATCH : now_type === ADD_TEAM? REFRESH_MATCH : now_type
+
+  switch (now_type) {
     case REFRESH_MATCH: {
 
       let { teams } = state.TeamsReducer
+
+      console.log( teams )
 
       teams = teams.map( ( tms, indTms ) => {
           return {
@@ -39,7 +47,7 @@ const crossSliceReducer = (state, action) => {
           let founded = tms.id === tms2.id? true : false
 
           if(!founded){
-            matches2.push({ id: String( newId++ ), home: tms.id, away: tms2.id, win: "-1" })
+            matches2.push({ id: String( newId++ ), idHome: tms.id, idAway: tms2.id, win: "-1" })
           }
         }
       }

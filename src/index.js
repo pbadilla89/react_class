@@ -15,8 +15,16 @@ import reducer from './redux/reducers'
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSyncAlt, faPlus, faPencilAlt, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+
+library.add( faSyncAlt, faPlus, faPencilAlt, faTrashAlt, faExclamationCircle)
+
 const Teams = lazy(() => import('./Containers/Teams'));
 const Matches = lazy(() => import('./Containers/Matches'));
+const Countries = lazy(() => import('./Containers/Countries'));
+const Page404 = lazy(() => import('./Containers/404'));
 
 const store = createStore(reducer)
 
@@ -28,9 +36,8 @@ ReactDOM.render(
                 <Switch>
                     <Route path="/" exact component={Teams} />
                     <Route path="/partidos" exact component={Matches} />
-                    <Route path="*" render={ () => {
-                        return (<Redirect to="/" />)
-                    } }/>
+                    <Route path="/Paices" exact component={Countries} />
+                    <Route path="*" component={Page404}/>
                 </Switch>
             </Router>
         </Suspense>
