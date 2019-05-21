@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
+const useForm = (initialValues, actions = {}) => {
   const [values, setValues] = useState(initialValues)
 
   const handleInputChange = (value, id) => {
@@ -13,35 +13,54 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
   }
 
   const save = props => {
-    if(values.action === "add"){
-      cb(values)
-    } else if(values.action === "edit") {
-      cb2(values)
-    } else if(values.action === "delete") {
-      cb3(values)
-    } 
-    
+
+    if( validate() ){
+      setValues({
+        ...values,
+        is_valid: true,
+        openModal: false
+      })
+
+      if(values.action === "add" && typeof actions.add != "undefined"){
+        actions.add(values)
+      } else if(values.action === "edit" && typeof actions.edit != "undefined") {
+        actions.edit(values)
+      } else if(values.action === "delete" && typeof actions.delete != "undefined") {
+        actions.delete(values)
+      }
+    } else {
+      setValues({
+        ...values,
+        is_valid: false
+      })
+    }
   }
 
   const onOpenModal = ( action, lst ) => {
 
-    let { name, country  } = values
+    let { fields, modal_input  } = values
 
-    if( typeof lst != "undefined" ){
-      name = lst.name
-      country = lst.country
-    } else {
-      name = ""
-      country = ""
+    let forState = {}
+
+    for(let fi = 0; fi < fields.length; fi++){
+      forState[fields[fi]] = typeof lst != "undefined" ? lst[fields[fi]] : ""
+    }
+
+    
+    for(let fi = 0; fi < modal_input.length; fi++){
+      let mi = modal_input[fi]
+      if (mi["type"] === "select"){
+        mi["option"] = values[mi["list"]]
+      }
     }
 
     setValues({
       ...values,
-      name,
       lst,
-      country,
+      ...forState,
       openModal: true,
-      action
+      action,
+      modal_input
     })
   }
  
@@ -53,31 +72,23 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
   }
 
   const validate = () => {
+    let is_valid = false
 
-    if( values.action !== "delete" && values.name !== "" && values.country !== "" ){
-      save()
-      
-      setValues({
-        ...values,
-        is_valid: true,
-        openModal: false
-      })
+    let { fields  } = values
 
-  } else if( values.action === "delete"){
-        save()
-        
-        setValues({
-          ...values,
-          is_valid: true,
-          openModal: false
-        })
-    } else {
-        
-      setValues({
-        ...values,
-        is_valid: false
-      })
+    let not_valid = 0
+
+    for(let fi = 0; fi < fields.length; fi++){
+      not_valid += values[fields[fi]] !== "" ? 0 : 1
     }
+
+    if( values.action !== "delete" && not_valid === 0 ){
+      is_valid = true
+    } else if( values.action === "delete"){
+      is_valid = true
+    }
+
+    return is_valid
   }
 
   return {
@@ -85,8 +96,7 @@ const useForm = (initialValues, cb = () => {}, cb2 = null, cb3 = null) => {
     handleInputChange,
     save,
     onOpenModal,
-    onCloseModal,
-    validate
+    onCloseModal
   }
 }
 

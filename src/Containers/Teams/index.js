@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { addTeam, editTeam, removeTeam } from '../../redux/Teams'
 import { refreshMatch } from '../../redux/Matches'
 
-import ModalTeam from '../../components/Modals/modalTeam'
+import ModalForm from '../../components/Modals/modalForm'
 
 import Table from '../../components/Table'
 
@@ -15,8 +15,13 @@ let formState = {
   openModal: false,
   name: "",
   country: "",
+  fields: ["name","country"],
   action: "add",
-  is_valid: true
+  is_valid: true,
+  modal_input: [
+    { label: "Name", type: "input", id: "name" },
+    { label: "Country", type: "select", id: "country", list: "countries", option: [] }
+  ]
 }
 
 const Teams = (props) => {
@@ -28,7 +33,9 @@ const Teams = (props) => {
     countries
   }
 
-  const { values, onOpenModal, onCloseModal, handleInputChange, save, validate } = useForm(formState, addTeam, editTeam, removeTeam);
+  const { values, onOpenModal, onCloseModal, handleInputChange, save } = useForm(formState, {add: addTeam, edit: editTeam, delete: removeTeam});
+
+
 
   return (
     <>
@@ -38,13 +45,12 @@ const Teams = (props) => {
           <button className="btn btn-success" onClick={ () => { refreshMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
         </div>
       </div>
-      <div className="container">
-        <ModalTeam forms={{ values, onCloseModal, handleInputChange, validate }} />
-      </div>
+      
+      <ModalForm forms={{ values, onCloseModal, handleInputChange, save }} title="Team" />
 
       <div className="container">
-        <label className="form-control"> Tabla de Posiciones </label>
-        <Table list={teams} headers={headerTeam} minList={2} action="position" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
+        <label className="form-control"> Table </label>
+        <Table list={teams} headers={headerTeam} relation={"name"} minList={2} action="position" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
       </div>
 
     </>
@@ -52,8 +58,16 @@ const Teams = (props) => {
 }
 
 const mapStateToProps = state => {
-  const { teams, headerTeam } = state.TeamsReducer
+  let { teams, headerTeam } = state.TeamsReducer
   const { countries } = state.CountriesReducer
+
+  teams = teams.map( ( tms ) => {
+
+    return {
+      ...tms,
+      name_next: countries[countries.findIndex( (rl) => rl.id === tms["country"])]["name"]
+    }
+  } )
 
   return  { teams, headerTeam, countries }
 }

@@ -4,10 +4,10 @@ const EDIT_COUNTRY = 'EDIT_COUNTRY'
 
 const initialState = {
     countries: [
-        { id: '1', name: 'Inglaterra' }
+        { id: '1', name: 'England' }
     ],
     headerCountry: [
-        { id: "name", label: "Nombre" }
+        { id: "name", label: "Name" }
     ]
 }
 

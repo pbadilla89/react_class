@@ -1,7 +1,9 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Table = ({ list = [], headers = [], forms, action, minList = 1 }) => {
+const Table = ({ list = [], headers = [], forms, action, minList = 1, relation = "", relation2 = "" }) => {
+
+  let { onOpenModal } = forms
 
   return (
     <table className="table">
@@ -24,17 +26,21 @@ const Table = ({ list = [], headers = [], forms, action, minList = 1 }) => {
 
                   classWin = lst.win === "0" ? "tied" : classWin
 
-                  return (<td key={indHdr} className={classWin} > { lst[hdr.id] } </td>)
+                  return (<td key={indHdr} className={`${classWin} h4`} > 
+                    { lst[hdr.id] } 
+                    { relation === hdr.id && <p className="h6" > { lst[relation+"_next"] }  </p> }
+                    { relation2 === hdr.id && <p className="h6" > { lst[relation2+"_next"] }  </p> }
+                    </td>)
                 } )
               }
               <td > 
                 { action === "position" ? (
                   <div className="btn-group d-flex" role="group">
-                    <button className={ `btn btn-warning w-100` } onClick={ () => { forms.onOpenModal("edit", lst) } }> <FontAwesomeIcon icon={["fas", "pencil-alt"]} /> </button>
-                    <button className={ `btn btn-danger w-100 ${list.length <= minList ? "d-none": "" }` } onClick={ () => { forms.onOpenModal("delete", lst) } }> <FontAwesomeIcon icon={["far", "trash-alt"]} /> </button>
+                    <button className={ `btn btn-warning w-100` } onClick={ () => { onOpenModal("edit", lst) } }> <FontAwesomeIcon icon={["fas", "pencil-alt"]} /> </button>
+                    <button className={ `btn btn-danger w-100 ${list.length <= minList ? "d-none": "" }` } onClick={ () => { onOpenModal("delete", lst) } }> <FontAwesomeIcon icon={["far", "trash-alt"]} /> </button>
                   </div>)
                   :(
-                  <button className={ `btn btn-info ${lst.win >= 0 ? "d-none": "" }` } onClick={ () => { forms.onOpenModalMatch( lst, indLst ) } } >Jugar Partido</button>)
+                  <button className={ `btn btn-info ${lst.win >= 0 ? "d-none": "" }` } onClick={ () => { onOpenModal( lst, indLst ) } } > <FontAwesomeIcon icon={["fas", "gamepad"]} /> </button>)
                 }
               </td>
             </tr>

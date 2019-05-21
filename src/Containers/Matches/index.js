@@ -3,22 +3,22 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { refreshMatch, playMatch } from '../../redux/Matches'
 
-import ModalMatch from '../../components/Modals/modalMatch'
+import ModalOption from '../../components/Modals/modalOption'
 
 import Table from '../../components/Table'
 
-import useMatch from '../../hooks/useMatch'
+import useOption from '../../hooks/useOption'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const formState = {
-  openModalMatch: false,
+  openModal: false,
 }
 
 const Matches = (props) => {
 
   const { refreshMatch, playMatch, MatchesReducer} = props
 
-  const { values, onCloseModalMatch, saveMatch, onOpenModalMatch } = useMatch(formState, playMatch);
+  const { values, onCloseModal, save, onOpenModal } = useOption(formState, playMatch);
 
   const { matches, headerMatch } = MatchesReducer
 
@@ -27,10 +27,10 @@ const Matches = (props) => {
       <button className="btn btn-success w-100" onClick={ () => { refreshMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
     </div>
     <div className="container">
-      <label className="form-control"> Partidos </label>
-      <Table list={matches} headers={headerMatch} action="Mathes" forms={{ values, onOpenModalMatch, onCloseModalMatch, saveMatch }} />
+      <label className="form-control"> Results / Fixtures </label>
+      <Table list={matches} headers={headerMatch} action="Mathes"  relation={"home"} relation2={"away"} forms={{ values, onOpenModal, onCloseModal, save }} />
 
-      <ModalMatch forms={{ values, onCloseModalMatch, saveMatch }} />
+      <ModalOption title="Play The Match" forms={{ values, onCloseModal, save }} />
     </div>
     </>
   )
@@ -39,18 +39,27 @@ const Matches = (props) => {
 const mapStateToProps = state => {
 
   const { matches } = state.MatchesReducer
-  const { teams } = state.TeamsReducer
+  let { teams } = state.TeamsReducer
+
+  const { countries } = state.CountriesReducer
+
+
 
   let new_matches = matches.map( ( mat ) => {
     const homeTeam = teams.filter( ( tms ) => tms.id === mat.idHome )[0]
     const awayTeam = teams.filter( ( tms ) => tms.id === mat.idAway )[0]
 
-    console.log(homeTeam)
-    console.log(awayTeam)
+    const options = [
+      { id: "1", value: "idHome", label: `Gana ${homeTeam.name}` },
+      { id: "2", value: "none", label: `Empatan` },
+      { id: "3", value: "idHome", label: `Gana ${awayTeam.name}` }
+    ]
 
     const id = mat.id
     const win = mat.win
-    return { id, home: homeTeam.name, idHome: homeTeam.id, away: awayTeam.name, idAway: awayTeam.id, win }
+    const home_next = countries[countries.findIndex( (rl) => rl.id === homeTeam["country"])]["name"]
+    const away_next = countries[countries.findIndex( (rl) => rl.id === awayTeam["country"])]["name"]
+    return { id, home: homeTeam.name, idHome: homeTeam.id, away: awayTeam.name, idAway: awayTeam.id, win, options, home_next, away_next }
   } )
 
   return {

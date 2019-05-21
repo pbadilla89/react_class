@@ -16,10 +16,10 @@ import reducer from './redux/reducers'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSyncAlt, faPlus, faPencilAlt, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSyncAlt, faPlus, faPencilAlt, faExclamationCircle, faGamepad } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 
-library.add( faSyncAlt, faPlus, faPencilAlt, faTrashAlt, faExclamationCircle)
+library.add( faSyncAlt, faPlus, faPencilAlt, faTrashAlt, faExclamationCircle, faGamepad)
 
 const Teams = lazy(() => import('./Containers/Teams'));
 const Matches = lazy(() => import('./Containers/Matches'));

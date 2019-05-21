@@ -7,8 +7,8 @@ matches: [
     { id:"2", idHome: "2", idAway: "1", win: "-1" }
 ],
 headerMatch: [
-    { id:"home", label: "Equipo Local" },
-    { id:"away", label: "Equipo Visita" }
+    { id:"home", label: "Home Team" },
+    { id:"away", label: "Away Team" }
 ]
 }
 

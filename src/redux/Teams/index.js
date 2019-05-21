@@ -9,12 +9,12 @@ const initialState = {
     ],
     headerTeam: [
         { id: "pos", label: "Pos" },
-        { id: "pts", label: "Puntos" },
-        { id: "name", label: "Nombre" },
-        { id: "pj", label: "Partidos Jugados" },
-        { id: "pg", label: "Partidos Ganados" },
-        { id: "pe", label: "Partidos Empatados" },
-        { id: "pp", label: "Partidos Perdidos" }
+        { id: "pts", label: "Points" },
+        { id: "name", label: "Name" },
+        { id: "pj", label: "Played Matches" },
+        { id: "pg", label: "Won Matches" },
+        { id: "pe", label: "Tied Matches" },
+        { id: "pp", label: "Lost Matches" }
     ]
 }
 
