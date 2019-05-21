@@ -11,17 +11,22 @@ const Menu = () => {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/" exact>
+            <NavLink className="nav-link" to="/teams" exact>
               Teams
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/partidos">
+            <NavLink className="nav-link" to="/matches">
               Matches
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/paices">
+            <NavLink className="nav-link" to="/leagues">
+              Leagues
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/countries">
               Countries
             </NavLink>
           </li>

@@ -4,8 +4,8 @@ const EDIT_TEAM = 'EDIT_TEAM'
 
 const initialState = {
     teams: [
-        { id: '1', name: 'Manchester United', pos: 1, pts: 0, country: "1", pj: 0, pg: 0, pe: 0, pp: 0 },
-        { id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "1", pj: 0, pg: 0, pe: 0, pp: 0 }
+        { id: '1', name: 'Manchester United', pos: 1, pts: 0, country: "2", league: 1, pj: 0, pg: 0, pe: 0, pp: 0 },
+        { id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "2", league: 1, pj: 0, pg: 0, pe: 0, pp: 0 }
     ],
     headerTeam: [
         { id: "pos", label: "Pos" },

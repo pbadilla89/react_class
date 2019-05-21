@@ -15,22 +15,25 @@ let formState = {
   openModal: false,
   name: "",
   country: "",
-  fields: ["name","country"],
+  league: "",
+  fields: ["name","country", "league"],
   action: "add",
   is_valid: true,
   modal_input: [
     { label: "Name", type: "input", id: "name" },
-    { label: "Country", type: "select", id: "country", list: "countries", option: [] }
+    { label: "Country", type: "select", id: "country", list: "countries", option: [] },
+    { label: "league", type: "select", id: "league", list: "leagues", option: [] }
   ]
 }
 
 const Teams = (props) => {
 
-  const { addTeam, editTeam, removeTeam, teams, headerTeam, countries, refreshMatch} = props
+  const { addTeam, editTeam, removeTeam, teams, headerTeam, countries, leagues, refreshMatch} = props
 
   formState = {
     ...formState,
-    countries
+    countries,
+    leagues
   }
 
   const { values, onOpenModal, onCloseModal, handleInputChange, save } = useForm(formState, {add: addTeam, edit: editTeam, delete: removeTeam});
@@ -60,6 +63,7 @@ const Teams = (props) => {
 const mapStateToProps = state => {
   let { teams, headerTeam } = state.TeamsReducer
   const { countries } = state.CountriesReducer
+  const { leagues } = state.LeaguesReducer
 
   teams = teams.map( ( tms ) => {
 
@@ -69,7 +73,7 @@ const mapStateToProps = state => {
     }
   } )
 
-  return  { teams, headerTeam, countries }
+  return  { teams, headerTeam, countries, leagues }
 }
 
 const mapDispatchToProps = {

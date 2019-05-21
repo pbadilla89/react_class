@@ -24,6 +24,7 @@ library.add( faSyncAlt, faPlus, faPencilAlt, faTrashAlt, faExclamationCircle, fa
 const Teams = lazy(() => import('./Containers/Teams'));
 const Matches = lazy(() => import('./Containers/Matches'));
 const Countries = lazy(() => import('./Containers/Countries'));
+const Leagues = lazy(() => import('./Containers/Leagues'));
 const Page404 = lazy(() => import('./Containers/404'));
 
 const store = createStore(reducer)
@@ -34,9 +35,11 @@ ReactDOM.render(
             <Router>
                 <Menu/>
                 <Switch>
-                    <Route path="/" exact component={Teams} />
-                    <Route path="/partidos" exact component={Matches} />
-                    <Route path="/Paices" exact component={Countries} />
+                    <Redirect from="/" exact to="/teams" />
+                    <Route path="/teams" exact component={Teams} />
+                    <Route path="/matches" exact component={Matches} />
+                    <Route path="/countries" exact component={Countries} />
+                    <Route path="/leagues" exact component={Leagues} />
                     <Route path="*" component={Page404}/>
                 </Switch>
             </Router>

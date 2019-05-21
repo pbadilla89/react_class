@@ -3,12 +3,14 @@ import { combineReducers } from 'redux'
 import TeamsReducer from './Teams'
 import MatchesReducer from './Matches'
 import CountriesReducer from './Countries'
+import LeaguesReducer from './Leagues'
 import crossSliceReducer from './CrossSlice'
 
 const combinedReducer = combineReducers({
   TeamsReducer,
   MatchesReducer,
-  CountriesReducer
+  CountriesReducer,
+  LeaguesReducer
 })
 
 const rootReducer = (state, action) => {

@@ -55,11 +55,15 @@ const mapStateToProps = state => {
       { id: "3", value: "idHome", label: `Gana ${awayTeam.name}` }
     ]
 
-    const id = mat.id
-    const win = mat.win
     const home_next = countries[countries.findIndex( (rl) => rl.id === homeTeam["country"])]["name"]
     const away_next = countries[countries.findIndex( (rl) => rl.id === awayTeam["country"])]["name"]
-    return { id, home: homeTeam.name, idHome: homeTeam.id, away: awayTeam.name, idAway: awayTeam.id, win, options, home_next, away_next }
+    return { 
+      ...mat,
+      home: homeTeam.name,
+      away: awayTeam.name,
+      options,
+      home_next,
+      away_next }
   } )
 
   return {
