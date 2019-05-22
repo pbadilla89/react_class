@@ -4,11 +4,11 @@ const EDIT_LEAGUE = 'EDIT_LEAGUE'
 
 const initialState = {
     leagues: [
-        { id: '1', name: 'Premier League', idCountry: "2" }
+        { id: '1', name: 'Premier League', country: "2" }
     ],
     headerLeague: [
         { id: "name", label: "Name" },
-        { id: "country", label: "Country" },
+        { id: "country_name", label: "Country" },
     ]
 }
 
@@ -49,11 +49,19 @@ export default (state = initialState, action) => {
 
             let { name, country } = action.payload.values
 
+            let { leagues } = state
+
+            let newId = 1
+
+            for( let nid = 0; nid < leagues.length; nid++ ){
+                newId = parseInt(leagues[nid]["id"]) > newId ? parseInt(leagues[nid]["id"]) : newId
+            }
+
             return {
                 ...state,
                 leagues:[
                     ...state.leagues,
-                    { id: String(state.leagues.length+1), name, country }
+                    { id: String(newId+1), name, country }
                 ]
             }
         }
@@ -81,10 +89,12 @@ export default (state = initialState, action) => {
             let { lst } = action.payload.values
 
             let last_remove = state.leagues.filter( (league) => league.id !== lst.id )
+            let removed = state.leagues.filter( (league) => league.id === lst.id )[0]
 
             return {
                 ...state,
-                leagues: last_remove
+                leagues: last_remove,
+                removed
             }
         }
         default: return state

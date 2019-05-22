@@ -1,35 +1,35 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
+
+const manuList = [
+  { id: "1", label: "Teams", linkTo: "teams" },
+  { id: "2", label: "Matches", linkTo: "matches" },
+  { id: "3", label: "Leagues", linkTo: "leagues" },
+  { id: "4", label: "Countries", linkTo: "countries" }
+]
 
 const Menu = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#"> { "<&Soccer/>" } </a>
+      <Link className="navbar-brand" to="/">
+        { "<&Soccer/>" }
+      </Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/teams" exact>
-              Teams
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/matches">
-              Matches
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/leagues">
-              Leagues
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/countries">
-              Countries
-            </NavLink>
-          </li>
+          {
+            manuList.map( ( menu ) => {
+              return (
+                <li key={menu.id} className="nav-item">
+                  <NavLink className="nav-link" to={`/${menu.linkTo}`} exact>
+                    {menu.label}
+                  </NavLink>
+                </li>
+              )
+            } )
+          }
         </ul>
       </div>
     </nav>

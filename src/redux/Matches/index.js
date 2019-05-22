@@ -1,15 +1,26 @@
 const REFRESH_MATCH = 'REFRESH_MATCH'
 const PLAY_MATCH = 'PLAY_MATCH'
+const CHANGE_ACTIVE_LEAGUE = 'CHANGE_ACTIVE_LEAGUE'
 
 const initialState = {
-matches: [
-    { id:"1", idHome: "1", idAway: "2", win: "-1" },
-    { id:"2", idHome: "2", idAway: "1", win: "-1" }
-],
-headerMatch: [
-    { id:"home", label: "Home Team" },
-    { id:"away", label: "Away Team" }
-]
+    matches: [
+        { id:"1", idHome: "1", idAway: "2", win: "-1", league: "1" },
+        { id:"2", idHome: "2", idAway: "1", win: "-1", league: "1" }
+    ],
+    activeLeague: "",
+    headerMatch: [
+        { id:"home", label: "Home Team" },
+        { id:"away", label: "Away Team" }
+    ]
+}
+
+export const changeActiveLeague = ( active ) => {
+    return ({
+        type: CHANGE_ACTIVE_LEAGUE,
+        payload: {
+            active
+        }
+    })
 }
 
 export const refreshMatch = () => {
@@ -33,12 +44,23 @@ export const playMatch = ( values, whoWin) => {
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case CHANGE_ACTIVE_LEAGUE:{
+
+            let { active } = action.payload
+
+            return {
+                ...state,
+                activeLeague: active
+            }
+        }
         case PLAY_MATCH: {
           let { whoWin, values } = action.payload
 
           const { matches } = state
           
-          let { lst, indLst } = values
+          let { lst } = values
+
+          const indLst = matches.findIndex( (mat) => mat.id === lst["id"])
 
           let tied = []
           let play = []

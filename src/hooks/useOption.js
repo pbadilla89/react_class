@@ -9,10 +9,10 @@ const useOption = (initialValues, cb = () => {}) => {
   }
 
   const onOpenModal = ( lst, indLst ) => {
-    console.log(lst)
     setValues({
       ...values,
       openModal: true,
+      indLst,
       lst
     })
   }

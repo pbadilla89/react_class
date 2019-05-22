@@ -6,8 +6,6 @@ const ModalOption = ({ forms, title }) => {
     let { values, onCloseModal, save } = forms
 
     let options = typeof values.lst != "undefined" ? values.lst.options : []
-
-    console.log( options )
     
     return (
         <Modal open={values.openModal} onClose={onCloseModal} center>

@@ -2,6 +2,8 @@ const REFRESH_MATCH = 'REFRESH_MATCH'
 const PLAY_MATCH = 'PLAY_MATCH'
 const REMOVE_TEAM = 'REMOVE_TEAM'
 const ADD_TEAM = 'ADD_TEAM'
+const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
+const REMOVE_LEAGUE = 'REMOVE_LEAGUE'
 
 const calculateScore = ( { tied, play, win, lose, tms } ) => {
   return {
@@ -23,8 +25,7 @@ const crossSliceReducer = (state, action) => {
     case REFRESH_MATCH: {
 
       let { teams } = state.TeamsReducer
-
-      console.log( teams )
+      let { leagues } = state.LeaguesReducer
 
       teams = teams.map( ( tms, indTms ) => {
           return {
@@ -40,14 +41,17 @@ const crossSliceReducer = (state, action) => {
       let newId = 1
       let matches2 = []
 
-      for(let indTms = 0; indTms < teams.length; indTms++){
-        let tms = teams[indTms]
-        for(let indTms2 = 0; indTms2 < teams.length; indTms2++){
-          let tms2 = teams[indTms2]
-          let founded = tms.id === tms2.id? true : false
-
-          if(!founded){
-            matches2.push({ id: String( newId++ ), idHome: tms.id, idAway: tms2.id, win: "-1" })
+      for(let indLeg = 0; indLeg < leagues.length; indLeg++){
+        let newTeams = teams.filter( (tms) => tms.league === leagues[indLeg].id )
+        for(let indTms = 0; indTms < newTeams.length; indTms++){
+          let tms = newTeams[indTms]
+          for(let indTms2 = 0; indTms2 < newTeams.length; indTms2++){
+            let tms2 = newTeams[indTms2]
+            let founded = tms.id === tms2.id? true : false
+  
+            if(!founded){
+              matches2.push({ id: String( newId++ ), idHome: tms.id, idAway: tms2.id, win: "-1", league: leagues[indLeg].id })
+            }
           }
         }
       }
@@ -86,6 +90,48 @@ const crossSliceReducer = (state, action) => {
           TeamsReducer:{
             ...state.TeamsReducer,
             teams: inOrder
+          }
+      }
+    }
+    case REMOVE_COUNTRY:{
+
+      let { CountriesReducer, TeamsReducer, LeaguesReducer } = state
+
+      const { removed } = CountriesReducer
+      const { leagues } = LeaguesReducer
+      const { teams } = TeamsReducer
+
+      let leagues_removed = leagues.filter( ( league ) => league.country !== removed.id )
+
+      let teams_removed = teams.filter( ( team ) => team.country !== removed.id )
+
+      return {
+        ...state,
+        TeamsReducer:{
+          ...state.TeamsReducer,
+          teams: teams_removed,
+          activeLeague: ""
+        },
+        LeaguesReducer:{
+          ...state.LeaguesReducer,
+          leagues: leagues_removed
+        }
+      }
+    }
+    case REMOVE_LEAGUE:{
+      let { TeamsReducer, LeaguesReducer } = state
+
+      const { removed } = LeaguesReducer
+      const { teams } = TeamsReducer
+
+      let teams_removed = teams.filter( ( team ) => team.league !== removed.id )
+
+      return {
+          ...state,
+          TeamsReducer:{
+            ...state.TeamsReducer,
+            teams: teams_removed,
+            activeLeague: ""
           }
       }
     }

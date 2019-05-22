@@ -38,7 +38,7 @@ const Leagues = (props) => {
 
   return (
     <>
-      <div className="container">
+      <div className="col-6 offset-3 mb-3 mt-3">
         <div className="btn-group d-flex" role="group">
           <button className="btn btn-primary" onClick={ () => { onOpenModal("add") } }> <FontAwesomeIcon icon={["fas", "plus"]} /></button>
         </div>
@@ -60,11 +60,11 @@ const mapStateToProps = state => {
   const { countries } = state.CountriesReducer
 
   leagues = leagues.map( ( leg ) => {
-    const country= countries.filter( ( coun ) => coun.id === leg.idCountry )[0]
+    const country= countries.filter( ( coun ) => coun.id === leg.country )[0]
 
     return { 
       ...leg,
-      country: country["name"] }
+      country_name: country["name"] }
   } )
 
   return  { leagues, headerLeague, countries }

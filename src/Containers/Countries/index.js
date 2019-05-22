@@ -29,7 +29,7 @@ const Countries = (props) => {
 
   return (
     <>
-      <div className="container">
+      <div className="col-6 offset-3 mb-3 mt-3">
         <button className="btn btn-primary w-100" onClick={ () => { onOpenModal("add") } }><FontAwesomeIcon icon={["fas", "plus"]} /> </button>
       </div>
 
@@ -37,7 +37,7 @@ const Countries = (props) => {
 
       <div className="container">
         <label className="form-control"> Countries </label>
-        <Table list={countries} headers={headerCountry} action="position" fix={1} forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
+        <Table list={countries} headers={headerCountry} action="position" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
       </div>
 
     </>

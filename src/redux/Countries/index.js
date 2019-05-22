@@ -4,7 +4,7 @@ const EDIT_COUNTRY = 'EDIT_COUNTRY'
 
 const initialState = {
     countries: [
-        { id: '1', name: 'All' },
+        { id: '1', name: 'Germany' },
         { id: '2', name: 'England' }
     ],
     headerCountry: [
@@ -49,29 +49,29 @@ export default (state = initialState, action) => {
 
             let { name } = action.payload.values
 
+            let { countries } = state
+
+            let newId = 1
+
+            for( let nid = 0; nid < countries.length; nid++ ){
+                newId = parseInt(countries[nid]["id"]) > newId ? parseInt(countries[nid]["id"]) : newId
+            }
+
             return {
                 ...state,
                 countries:[
                     ...state.countries,
-                    { id: String(state.countries.length+1), name}
+                    { id: String(newId+1), name}
                 ]
             }
         }
         case EDIT_COUNTRY:{
-          console.log("llego aca")
           let { lst, name } = action.payload.values
 
           let { countries } = state
 
           let last_edit = countries.map( ( country ) => {
               let oldName = country.name
-
-              console.log(name)
-              console.log(oldName)
-
-              console.log(lst.id)
-              console.log(country.id)
-              console.log(country.id === lst.id)
 
               if( country.id === lst.id ){
                 oldName = name
@@ -91,10 +91,12 @@ export default (state = initialState, action) => {
             let { countries } = state
 
             let last_remove = countries.filter( ( country ) => country.id !== lst.id )
+            let removed = countries.filter( ( country ) => country.id === lst.id )[0]
 
             return {
                 ...state,
-                countries: last_remove
+                countries: last_remove,
+                removed
             }
         }
         default: return state

@@ -4,7 +4,6 @@ const useForm = (initialValues, actions = {}) => {
   const [values, setValues] = useState(initialValues)
 
   const handleInputChange = (value, id) => {
-    console.log(value)
 
     setValues({
       ...values,

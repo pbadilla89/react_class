@@ -21,8 +21,8 @@ const Table = ({ list = [], headers = [], forms, action, minList = 0, relation =
           return (
             <tr key={lst.id} >
               { headers.map( (hdr, indHdr) => {
-                  let classWin = lst.idHome === lst.win && hdr.id == "home" ? "winner": ""
-                  classWin = lst.idAway === lst.win && hdr.id == "away" ? "winner": classWin
+                  let classWin = lst.idHome === lst.win && hdr.id === "home" ? "winner": ""
+                  classWin = lst.idAway === lst.win && hdr.id === "away" ? "winner": classWin
 
                   classWin = lst.win === "0" ? "tied" : classWin
 

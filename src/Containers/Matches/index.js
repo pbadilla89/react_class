@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux'
-import { refreshMatch, playMatch } from '../../redux/Matches'
+import { refreshMatch, playMatch, changeActiveLeague } from '../../redux/Matches'
 
 import ModalOption from '../../components/Modals/modalOption'
 
@@ -16,14 +16,24 @@ const formState = {
 
 const Matches = (props) => {
 
-  const { refreshMatch, playMatch, MatchesReducer} = props
+  const { refreshMatch, playMatch, MatchesReducer, LeaguesReducer, activeLeague, changeActiveLeague} = props
 
   const { values, onCloseModal, save, onOpenModal } = useOption(formState, playMatch);
 
   const { matches, headerMatch } = MatchesReducer
+  const { leagues } = LeaguesReducer
 
   return ( <>
-    <div className="container">
+    <div className="container mb-3 mt-3">
+      <select className="form-control" value={ activeLeague } onChange={ (e) => { changeActiveLeague(e.target.value) }} >
+        {
+          leagues.map( ( leg, indLeg ) => {
+            return ( <option key={indLeg} value={leg.id} > { leg.name } </option> )
+          } )
+        }
+      </select>
+    </div>
+    <div className="col-6 offset-3 mb-3 mt-3">
       <button className="btn btn-success w-100" onClick={ () => { refreshMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
     </div>
     <div className="container">
@@ -38,14 +48,21 @@ const Matches = (props) => {
 
 const mapStateToProps = state => {
 
-  const { matches } = state.MatchesReducer
-  let { teams } = state.TeamsReducer
+  let { MatchesReducer, CountriesReducer, TeamsReducer, LeaguesReducer } = state
 
-  const { countries } = state.CountriesReducer
+  let { matches } = MatchesReducer
+  let { teams, activeLeague } = TeamsReducer
 
+  const { countries } = CountriesReducer
+  const { leagues } = LeaguesReducer
 
+  if( activeLeague === "" ){
+    activeLeague = leagues[0]["id"]
+  }
 
-  let new_matches = matches.map( ( mat ) => {
+  let matches2 = matches.filter( ( mat ) => mat.league === activeLeague )
+
+  let new_matches = matches2.map( ( mat ) => {
     const homeTeam = teams.filter( ( tms ) => tms.id === mat.idHome )[0]
     const awayTeam = teams.filter( ( tms ) => tms.id === mat.idAway )[0]
 
@@ -71,13 +88,18 @@ const mapStateToProps = state => {
     MatchesReducer: {
       ...state.MatchesReducer,
       matches: new_matches
+    },
+    TeamsReducer: {
+      ...state.TeamsReducer,
+      activeLeague
     }
   }
 }
 
 const mapDispatchToProps = {
   refreshMatch,
-  playMatch
+  playMatch,
+  changeActiveLeague
 }
 
 export default  connect(mapStateToProps, mapDispatchToProps)(Matches)
