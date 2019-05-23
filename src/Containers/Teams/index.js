@@ -50,7 +50,7 @@ const Teams = (props) => {
       <ModalForm forms={{ values, onCloseModal, handleInputChange, save }} title="Team" />
 
       <div className="container">
-        <label className="form-control"> Table </label>
+        <label className="form-control"> List Of Teams </label>
         <Table list={teams} headers={headerTeam} minList={2} action="form" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
       </div>
 
