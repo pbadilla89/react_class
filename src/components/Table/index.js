@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Table = ({ list = [], headers = [], forms, action, minList = 0, relation = "", relation2 = "", fix = 0 }) => {
+const Table = ({ list = [], headers = [], forms = {}, action, minList = 0, relation = "", relation2 = "", fix = 0 }) => {
 
   let { onOpenModal } = forms
 
@@ -34,13 +34,14 @@ const Table = ({ list = [], headers = [], forms, action, minList = 0, relation =
                 } )
               }
               <td > 
-                { action === "position" ? (
+                { action === "form" ? (
                   <div className="btn-group d-flex" role="group">
                     <button className={ `btn btn-warning w-100` } onClick={ () => { onOpenModal("edit", lst) } }> <FontAwesomeIcon icon={["fas", "pencil-alt"]} /> </button>
                     <button className={ `btn btn-danger w-100 ${list.length <= minList ? "d-none": indLst < fix ? "d-none" : "" }` } onClick={ () => { onOpenModal("delete", lst) } }> <FontAwesomeIcon icon={["far", "trash-alt"]} /> </button>
                   </div>)
-                  :(
+                  : action === "Mathes" ? (
                   <button className={ `btn btn-info ${lst.win >= 0 ? "d-none": "" }` } onClick={ () => { onOpenModal( lst, indLst ) } } > <FontAwesomeIcon icon={["fas", "gamepad"]} /> </button>)
+                  : ""
                 }
               </td>
             </tr>

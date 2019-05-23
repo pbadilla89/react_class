@@ -3,9 +3,10 @@ import { NavLink, Link } from 'react-router-dom'
 
 const manuList = [
   { id: "1", label: "Teams", linkTo: "teams" },
-  { id: "2", label: "Matches", linkTo: "matches" },
-  { id: "3", label: "Leagues", linkTo: "leagues" },
-  { id: "4", label: "Countries", linkTo: "countries" }
+  { id: "2", label: "Table", linkTo: "table" },
+  { id: "3", label: "Matches", linkTo: "matches" },
+  { id: "4", label: "Leagues", linkTo: "leagues" },
+  { id: "5", label: "Countries", linkTo: "countries" }
 ]
 
 const Menu = () => {

@@ -48,7 +48,7 @@ const Leagues = (props) => {
 
       <div className="container">
         <label className="form-control"> Leagues </label>
-        <Table list={leagues} headers={headerLeague} minList={1} action="position" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
+        <Table list={leagues} headers={headerLeague} minList={1} action="form" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
       </div>
 
     </>

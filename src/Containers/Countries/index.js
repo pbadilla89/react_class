@@ -37,7 +37,7 @@ const Countries = (props) => {
 
       <div className="container">
         <label className="form-control"> Countries </label>
-        <Table list={countries} headers={headerCountry} action="position" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
+        <Table list={countries} headers={headerCountry} action="form" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
       </div>
 
     </>

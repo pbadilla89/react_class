@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux'
-import { addTeam, editTeam, removeTeam, changeActiveLeague } from '../../redux/Teams'
-import { refreshMatch } from '../../redux/Matches'
+import { addTeam, editTeam, removeTeam } from '../../redux/Teams'
 
 import ModalForm from '../../components/Modals/modalForm'
 
@@ -28,7 +27,7 @@ let formState = {
 
 const Teams = (props) => {
 
-  const { addTeam, editTeam, removeTeam, teams2, headerTeam, countries, leagues, refreshMatch, activeLeague, changeActiveLeague} = props
+  const { addTeam, editTeam, removeTeam, teams, headerTeam, countries, leagues } = props
 
   formState = {
     ...formState,
@@ -42,20 +41,9 @@ const Teams = (props) => {
 
   return (
     <>
-      <div className="container mb-3 mt-3">
-        <select className="form-control" value={ activeLeague } onChange={ (e) => { changeActiveLeague(e.target.value) }} >
-          {
-            leagues.map( ( leg, indLeg ) => {
-              return ( <option key={indLeg} value={leg.id} > { leg.name } </option> )
-            } )
-          }
-        </select>
-      </div>
-
       <div className="col-6 offset-3 mb-3 mt-3">
         <div className="btn-group d-flex" role="group">
           <button className="btn btn-primary" onClick={ () => { onOpenModal("add") } }> <FontAwesomeIcon icon={["fas", "plus"]} /></button>
-          <button className="btn btn-success" onClick={ () => { refreshMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
         </div>
       </div>
       
@@ -63,7 +51,7 @@ const Teams = (props) => {
 
       <div className="container">
         <label className="form-control"> Table </label>
-        <Table list={teams2} headers={headerTeam} relation={"name"} minList={2} action="position" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
+        <Table list={teams} headers={headerTeam} minList={2} action="form" forms={{ values, onOpenModal, onCloseModal, handleInputChange, save }} />
       </div>
 
     </>
@@ -71,34 +59,28 @@ const Teams = (props) => {
 }
 
 const mapStateToProps = state => {
-  let { teams, headerTeam, activeLeague } = state.TeamsReducer
+  let { teams, headerTeam } = state.TeamsReducer
   const { countries } = state.CountriesReducer
-  const { leagues } = state.LeaguesReducer
+  let { leagues } = state.LeaguesReducer
 
-  if( activeLeague === "" ){
-    activeLeague = leagues[0]["id"]
-  }
-
-  let teams2 = teams.filter( ( tem ) => tem.league === activeLeague )
-
-  teams2 = teams2.map( ( tms, incTms ) => {
+  teams = teams.map( ( tms ) => {
+    const country= countries.filter( ( coun ) => coun.id === tms.country )[0]
+    const league= leagues.filter( ( leg ) => leg.id === tms.league )[0]
 
     return {
       ...tms,
-      pos: incTms+1,
-      name_next: countries[countries.findIndex( (rl) => rl.id === tms["country"])]["name"]
+      country_name: country.name,
+      league_name: league.name
     }
   } )
 
-  return  { teams2, headerTeam, countries, activeLeague, leagues }
+  return  { teams, headerTeam, countries, leagues }
 }
 
 const mapDispatchToProps = {
   addTeam,
   editTeam,
-  removeTeam,
-  refreshMatch,
-  changeActiveLeague
+  removeTeam
 }
 
 export default  connect(mapStateToProps, mapDispatchToProps)(Teams)

@@ -22,6 +22,7 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 library.add( faSyncAlt, faPlus, faPencilAlt, faTrashAlt, faExclamationCircle, faGamepad)
 
 const Teams = lazy(() => import('./Containers/Teams'));
+const Table = lazy(() => import('./Containers/Tables'));
 const Matches = lazy(() => import('./Containers/Matches'));
 const Countries = lazy(() => import('./Containers/Countries'));
 const Leagues = lazy(() => import('./Containers/Leagues'));
@@ -37,6 +38,7 @@ ReactDOM.render(
                 <Switch>
                     <Redirect from="/" exact to="/teams" />
                     <Route path="/teams" exact component={Teams} />
+                    <Route path="/table" exact component={Table} />
                     <Route path="/matches" exact component={Matches} />
                     <Route path="/countries" exact component={Countries} />
                     <Route path="/leagues" exact component={Leagues} />

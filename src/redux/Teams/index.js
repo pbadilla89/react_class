@@ -9,7 +9,7 @@ const initialState = {
         { id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "2", league: "1", pj: 0, pg: 0, pe: 0, pp: 0 }
     ],
     activeLeague: "",
-    headerTeam: [
+    headerTeamTable: [
         { id: "pos", label: "Pos" },
         { id: "pts", label: "Points" },
         { id: "name", label: "Name" },
@@ -17,6 +17,11 @@ const initialState = {
         { id: "pg", label: "Won Matches" },
         { id: "pe", label: "Tied Matches" },
         { id: "pp", label: "Lost Matches" }
+    ],
+    headerTeam: [
+        { id: "name", label: "Name" },
+        { id: "country_name", label: "Country" },
+        { id: "league_name", label: "League" }
     ]
 }
 
