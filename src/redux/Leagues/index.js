@@ -4,7 +4,7 @@ const EDIT_LEAGUE = 'EDIT_LEAGUE'
 
 const initialState = {
     leagues: [
-        { id: '1', name: 'Premier League', country: "2" }
+        { _id: '1', name: 'Premier League', country: "2" }
     ],
     headerLeague: [
         { id: "name", label: "Name" },

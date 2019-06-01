@@ -19,7 +19,7 @@ const Table = ({ list = [], headers = [], forms = {}, action, minList = 0, relat
       <tbody>
       { list.map( (lst, indLst) => {
           return (
-            <tr key={lst.id} >
+            <tr key={lst._id} >
               { headers.map( (hdr, indHdr) => {
                   let classWin = lst.idHome === lst.win && hdr.id === "home" ? "winner": ""
                   classWin = lst.idAway === lst.win && hdr.id === "away" ? "winner": classWin

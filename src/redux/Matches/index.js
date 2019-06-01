@@ -4,8 +4,8 @@ const CHANGE_ACTIVE_LEAGUE = 'CHANGE_ACTIVE_LEAGUE'
 
 const initialState = {
     matches: [
-        { id:"1", idHome: "1", idAway: "2", win: "-1", league: "1" },
-        { id:"2", idHome: "2", idAway: "1", win: "-1", league: "1" }
+        { _id:"1", idHome: "1", idAway: "2", win: "-1", league: "1" },
+        { _id:"2", idHome: "2", idAway: "1", win: "-1", league: "1" }
     ],
     activeLeague: "",
     headerMatch: [

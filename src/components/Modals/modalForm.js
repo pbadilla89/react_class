@@ -8,9 +8,9 @@ const ModalForm = ({ forms, title }) => {
 
     return (
         <>
-            <Modal open={values.openModal} onClose={onCloseModal} center>
+            <Modal open={values.openModal} onClose={onCloseModal} center closeOnOverlayClick={false}>
                 <div className="modal-body">
-                    <h2> { values.action === "add" ? "Add" : values.action === "edit" ? "Edit" : "Delete" } {title}</h2>
+                    <h2> { values.action === "add" ? "Add" : values.action === "edit" ? "Edit" : values.action === "delete"? "Delete": "" } {title}</h2>
                     {
                         values.action !== "delete" ? 
                                 values.modal_input.map( ( mi ) => {

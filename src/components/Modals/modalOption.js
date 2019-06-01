@@ -8,7 +8,7 @@ const ModalOption = ({ forms, title }) => {
     let options = typeof values.lst != "undefined" ? values.lst.options : []
     
     return (
-        <Modal open={values.openModal} onClose={onCloseModal} center>
+        <Modal open={values.openModal} onClose={onCloseModal} center closeOnOverlayClick={false}>
             <div className="modal-header">
                 <h2> { title } </h2>
             </div>

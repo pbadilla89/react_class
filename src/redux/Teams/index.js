@@ -5,8 +5,8 @@ const CHANGE_ACTIVE_LEAGUE = 'CHANGE_ACTIVE_LEAGUE'
 
 const initialState = {
     teams: [
-        { id: '1', name: 'Manchester United', pos: 1, pts: 0, country: "2", league: "1", pj: 0, pg: 0, pe: 0, pp: 0 },
-        { id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "2", league: "1", pj: 0, pg: 0, pe: 0, pp: 0 }
+        { _id: '1', name: 'Manchester United', pos: 1, pts: 0, country: "2", league: "1", pj: 0, pg: 0, pe: 0, pp: 0 },
+        { _id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "2", league: "1", pj: 0, pg: 0, pe: 0, pp: 0 }
     ],
     activeLeague: "",
     headerTeamTable: [
