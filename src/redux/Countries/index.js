@@ -1,27 +1,23 @@
-const ADD_COUNTRY = 'ADD_COUNTRY'
 const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
 const EDIT_COUNTRY = 'EDIT_COUNTRY'
+const RELOAD_COUNTRY = 'RELOAD_COUNTRY'
 
 const initialState = {
-    countries: [
-        { _id: '1', name: 'Germany' },
-        { _id: '2', name: 'England' }
-    ],
+    countries: [],
     headerCountry: [
         { id: "name", label: "Name" }
     ]
 }
 
-
-export const addCountry = ( values ) => {
-    return ({
-        type: ADD_COUNTRY,
-        payload: {
-            values
-        }
-    })
+export const reloadCountry = ( listCountry, blank = true ) => {
+  return ({
+      type: RELOAD_COUNTRY,
+      payload: {
+          listCountry,
+          blank
+      }
+  })
 }
-
 
 export const editCountry = ( values ) => {
     return ({
@@ -45,25 +41,24 @@ export const removeCountry = ( values ) => {
 export default (state = initialState, action) => {
 
     switch (action.type) {
-        case ADD_COUNTRY:{
+        case RELOAD_COUNTRY:{
+          const { blank, listCountry } = action.payload
 
-            let { name } = action.payload.values
+          let countries = [
+            ...state.countries,
+            ...listCountry.countries
+          ]
 
-            let { countries } = state
+          if(blank) {
+            countries = [
+              ...listCountry.countries
+            ]
+          }
 
-            let newId = 1
-
-            for( let nid = 0; nid < countries.length; nid++ ){
-                newId = parseInt(countries[nid]["id"]) > newId ? parseInt(countries[nid]["id"]) : newId
-            }
-
-            return {
-                ...state,
-                countries:[
-                    ...state.countries,
-                    { id: String(newId+1), name}
-                ]
-            }
+          return {
+            ...state,
+            countries
+          }
         }
         case EDIT_COUNTRY:{
           let { lst, name } = action.payload.values
@@ -73,7 +68,7 @@ export default (state = initialState, action) => {
           let last_edit = countries.map( ( country ) => {
               let oldName = country.name
 
-              if( country.id === lst.id ){
+              if( country.id === lst._id ){
                 oldName = name
               }
 
@@ -90,8 +85,8 @@ export default (state = initialState, action) => {
 
             let { countries } = state
 
-            let last_remove = countries.filter( ( country ) => country.id !== lst.id )
-            let removed = countries.filter( ( country ) => country.id === lst.id )[0]
+            let last_remove = countries.filter( ( country ) => country._id !== lst._id )
+            let removed = countries.filter( ( country ) => country._id === lst._id )[0]
 
             return {
                 ...state,

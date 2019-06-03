@@ -1,27 +1,25 @@
-const ADD_LEAGUE = 'ADD_LEAGUE'
 const REMOVE_LEAGUE = 'REMOVE_LEAGUE'
 const EDIT_LEAGUE = 'EDIT_LEAGUE'
+const RELOAD_LEAGUE = 'RELOAD_LEAGUE'
 
 const initialState = {
-    leagues: [
-        { _id: '1', name: 'Premier League', country: "2" }
-    ],
+    leagues: [],
+    countries: [],
     headerLeague: [
         { id: "name", label: "Name" },
         { id: "country_name", label: "Country" },
     ]
 }
 
-
-export const addLeague = ( values ) => {
-    return ({
-        type: ADD_LEAGUE,
-        payload: {
-            values
-        }
-    })
+export const reloadLeague = ( listLeague, blank = true ) => {
+  return ({
+      type: RELOAD_LEAGUE,
+      payload: {
+          listLeague,
+          blank
+      }
+  })
 }
-
 
 export const editLeague = ( values ) => {
     return ({
@@ -45,59 +43,59 @@ export const removeLeague = ( values ) => {
 export default (state = initialState, action) => {
 
     switch (action.type) {
-        case ADD_LEAGUE:{
+      case RELOAD_LEAGUE:{
+        const { blank, listLeague } = action.payload
 
-            let { name, country } = action.payload.values
+        let leagues = [
+          ...state.leagues,
+          ...listLeague.leagues
+        ]
 
-            let { leagues } = state
-
-            let newId = 1
-
-            for( let nid = 0; nid < leagues.length; nid++ ){
-                newId = parseInt(leagues[nid]["id"]) > newId ? parseInt(leagues[nid]["id"]) : newId
-            }
-
-            return {
-                ...state,
-                leagues:[
-                    ...state.leagues,
-                    { id: String(newId+1), name, country }
-                ]
-            }
+        if(blank) {
+          leagues = [
+            ...listLeague.leagues
+          ]
         }
-        case EDIT_LEAGUE:{
-            let { lst, name, country } = action.payload.values
 
-            let last_edit = state.leagues.map( ( league ) => {
-                let oldName = league.name
-                let oldCountry = league.country
-
-                if( league.id === lst.id ){
-                    oldName = name
-                    oldCountry = country
-                }
-
-                return {...league, name: oldName, country: oldCountry}
-            } )
-            
-            return {
-                ...state,
-                leagues: last_edit
-            }
+        return {
+          ...state,
+          leagues,
+          countries: listLeague.leagues
         }
-        case REMOVE_LEAGUE:{
-            let { lst } = action.payload.values
+      }
+      case EDIT_LEAGUE:{
+          let { lst, name, country } = action.payload.values
 
-            let last_remove = state.leagues.filter( (league) => league.id !== lst.id )
-            let removed = state.leagues.filter( (league) => league.id === lst.id )[0]
+          let last_edit = state.leagues.map( ( league ) => {
+              let oldName = league.name
+              let oldCountry = league.country
 
-            return {
-                ...state,
-                leagues: last_remove,
-                removed
-            }
-        }
-        default: return state
+              if( league.id === lst.id ){
+                  oldName = name
+                  oldCountry = country
+              }
+
+              return {...league, name: oldName, country: oldCountry}
+          } )
+          
+          return {
+              ...state,
+              leagues: last_edit
+          }
+      }
+      case REMOVE_LEAGUE:{
+          let { lst } = action.payload.values
+
+          let last_remove = state.leagues.filter( (league) => league.id !== lst.id )
+          let removed = state.leagues.filter( (league) => league.id === lst.id )[0]
+
+          return {
+              ...state,
+              leagues: last_remove,
+              removed
+          }
+      }
+      default: return state
     }
 }
 

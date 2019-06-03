@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux'
-import { addLeague, editLeague, removeLeague } from '../../redux/Leagues'
+import { editLeague } from '../../redux/Leagues'
+import { listLeagues, saveLeague, removeLeague  } from '../../redux/Leagues/thunks'
 
 import ModalForm from '../../components/Modals/modalForm'
 
@@ -25,7 +26,11 @@ let formState = {
 
 const Leagues = (props) => {
 
-  const { addLeague, editLeague, removeLeague, leagues, headerLeague, countries } = props
+  const { addLeague, editLeague, removeLeague, leagues, headerLeague, countries, listLeagues } = props
+
+  useEffect(() => {
+    listLeagues()
+  }, [])
 
   formState = {
     ...formState,
@@ -56,11 +61,11 @@ const Leagues = (props) => {
 }
 
 const mapStateToProps = state => {
-  let { leagues, headerLeague } = state.LeaguesReducer
-  const { countries } = state.CountriesReducer
+  let { leagues, headerLeague, countries } = state.LeaguesReducer
 
   leagues = leagues.map( ( leg ) => {
-    const country= countries.filter( ( coun ) => coun._id === leg.country )[0]
+    console.log(leg)
+    const country = countries.filter( ( coun ) => coun._id === leg.country )[0]
 
     return { 
       ...leg,
@@ -71,8 +76,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  addLeague,
+  addLeague: saveLeague,
   editLeague,
+  listLeagues,
   removeLeague
 }
 

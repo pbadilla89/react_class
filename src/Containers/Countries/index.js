@@ -1,7 +1,9 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 
 import { connect } from 'react-redux'
-import { addCountry, editCountry, removeCountry } from '../../redux/Countries'
+import { editCountry } from '../../redux/Countries'
+
+import { listCountries, saveCountry, removeCountry } from '../../redux/Countries/thunks'
 
 import ModalForm from '../../components/Modals/modalForm'
 
@@ -23,9 +25,13 @@ const formState = {
 
 const Countries = (props) => {
 
-  const { addCountry, editCountry, removeCountry, countries, headerCountry} = props
+  const { addCountry, editCountry, removeCountry, countries, headerCountry, listCountries} = props
 
   const { values, onOpenModal, onCloseModal, handleInputChange, save } = useForm(formState, {add: addCountry, edit: editCountry, delete: removeCountry});
+
+  useEffect(() => {
+    listCountries()
+  }, [])
 
   return (
     <>
@@ -51,9 +57,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  addCountry,
+  addCountry : saveCountry,
   editCountry,
-  removeCountry
+  removeCountry,
+  listCountries
 }
 
 export default  connect(mapStateToProps, mapDispatchToProps)(Countries)
