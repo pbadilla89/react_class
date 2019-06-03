@@ -38,14 +38,3 @@ export const removeUser = ( users ) =>  async (dispatch, getState) => {
   console.log(res)
   dispatch(listUsers())
 }
-
-export const loginUser = ( users ) =>  async (dispatch, getState) => {
-  // const config = {
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // }
-  // const res = await post(`${HostApi}/api/removeUser`, users.lst, config)
-  // console.log(res)
-  // dispatch(listUsers())
-}

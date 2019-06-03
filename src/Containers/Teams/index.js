@@ -64,8 +64,8 @@ const mapStateToProps = state => {
   let { leagues } = state.LeaguesReducer
 
   teams = teams.map( ( tms ) => {
-    const country= countries.filter( ( coun ) => coun.id === tms.country )[0]
-    const league= leagues.filter( ( leg ) => leg.id === tms.league )[0]
+    const country= countries.filter( ( coun ) => coun._id === tms.country )[0]
+    const league= leagues.filter( ( leg ) => leg._id === tms.league )[0]
 
     return {
       ...tms,

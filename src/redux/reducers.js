@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 
 import UsersReducer from './Users'
+import LogsReducer from './Logs'
 import TeamsReducer from './Teams'
 import MatchesReducer from './Matches'
 import CountriesReducer from './Countries'
@@ -12,7 +13,8 @@ const combinedReducer = combineReducers({
   TeamsReducer,
   MatchesReducer,
   CountriesReducer,
-  LeaguesReducer
+  LeaguesReducer,
+  LogsReducer
 })
 
 const rootReducer = (state, action) => {

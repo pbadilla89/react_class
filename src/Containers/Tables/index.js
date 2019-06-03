@@ -18,7 +18,7 @@ const Tables = (props) => {
         <select className="form-control" value={ activeLeague } onChange={ (e) => { changeActiveLeague(e.target.value) }} >
           {
             leagues.map( ( leg, indLeg ) => {
-              return ( <option key={indLeg} value={leg.id} > { leg.name } </option> )
+              return ( <option key={indLeg} value={leg._id} > { leg.name } </option> )
             } )
           }
         </select>
@@ -45,7 +45,7 @@ const mapStateToProps = state => {
   const { leagues } = state.LeaguesReducer
 
   if( activeLeague === "" ){
-    activeLeague = leagues[0]["id"]
+    activeLeague = leagues[0]["_id"]
   }
 
   let teams2 = teams.filter( ( tem ) => tem.league === activeLeague )
@@ -55,7 +55,7 @@ const mapStateToProps = state => {
     return {
       ...tms,
       pos: incTms+1,
-      name_next: countries[countries.findIndex( (rl) => rl.id === tms["country"])]["name"]
+      name_next: countries[countries.findIndex( (rl) => rl._id === tms["country"])]["name"]
     }
   } )
 

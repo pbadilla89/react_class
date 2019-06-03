@@ -12,25 +12,91 @@ const useForm = (initialValues, actions = {}) => {
   }
 
   const save = props => {
+    let openModal = true
+    let is_valid = false
 
     if( validate() ){
-      setValues({
-        ...values,
-        is_valid: true,
-        openModal: false
-      })
+      
+      if(values.action !== "login" && values.action !== "register"){
+        if(values.action === "add" && typeof actions.add != "undefined"){
+          actions.add(values)
+          is_valid = true
+          openModal = false
+        } else if(values.action === "edit" && typeof actions.edit != "undefined") {
+          actions.edit(values)
+          is_valid = true
+          openModal = false
+        } else if(values.action === "delete" && typeof actions.delete != "undefined") {
+          actions.delete(values)
+          is_valid = true
+          openModal = false
+        }
 
-      if(values.action === "add" && typeof actions.add != "undefined"){
-        actions.add(values)
-      } else if(values.action === "edit" && typeof actions.edit != "undefined") {
-        actions.edit(values)
-      } else if(values.action === "delete" && typeof actions.delete != "undefined") {
-        actions.delete(values)
+        setValues({
+          ...values,
+          is_valid,
+          openModal
+        })
+      } else if(values.action === "login" && typeof actions.login != "undefined") {
+        actions.login(values)
+        is_valid = true
+        setValues({
+          ...values,
+          is_valid
+        })
+      } else if(values.action === "register" && typeof actions.register != "undefined") {
+        actions.register(values)
       }
     } else {
       setValues({
         ...values,
-        is_valid: false
+        is_valid,
+        openModal
+      })
+    }
+  }
+
+  const save2 = props => {
+    let openModal = true
+    let is_valid2 = false
+
+    if( validate2() ){
+      
+      if(values.action2 !== "login" && values.action2 !== "register"){
+        if(values.action2 === "add" && typeof actions.add != "undefined"){
+          actions.add(values)
+          is_valid2 = true
+          openModal = false
+        } else if(values.action2 === "edit" && typeof actions.edit != "undefined") {
+          actions.edit(values)
+          is_valid2 = true
+          openModal = false
+        } else if(values.action2 === "delete" && typeof actions.delete != "undefined") {
+          actions.delete(values)
+          is_valid2 = true
+          openModal = false
+        }
+
+        setValues({
+          ...values,
+          is_valid2,
+          openModal
+        })
+      } else if(values.action2 === "login" && typeof actions.login != "undefined") {
+        actions.login(values)
+        is_valid2 = true
+        setValues({
+          ...values,
+          is_valid2
+        })
+      } else if(values.action2 === "register" && typeof actions.register != "undefined") {
+        actions.register(values)
+      }
+    } else {
+      setValues({
+        ...values,
+        is_valid2,
+        openModal
       })
     }
   }
@@ -78,7 +144,15 @@ const useForm = (initialValues, actions = {}) => {
     let not_valid = 0
 
     for(let fi = 0; fi < fields.length; fi++){
-      not_valid += values[fields[fi]] !== "" ? 0 : 1
+
+      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+      if( fields[fi] === "email" ){
+        not_valid += regex.test(values[fields[fi]]) ? 0 : 1
+        alert("Email invalido")
+      } else {
+        not_valid += values[fields[fi]] !== "" ? 0 : 1
+      }
     }
 
     if( values.action !== "delete" && not_valid === 0 ){
@@ -90,10 +164,38 @@ const useForm = (initialValues, actions = {}) => {
     return is_valid
   }
 
+  const validate2 = () => {
+    let is_valid = false
+
+    let { fields2  } = values
+
+    let not_valid = 0
+
+    for(let fi = 0; fi < fields2.length; fi++){
+      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+      if( fields2[fi] === "email2" ){
+        not_valid += regex.test(values[fields2[fi]]) ? 0 : 1
+        alert("Email invalido")
+      } else {
+        not_valid += values[fields2[fi]] !== "" ? 0 : 1
+      }
+    }
+
+    if( values.action2 !== "delete" && not_valid === 0 ){
+      is_valid = true
+    } else if( values.action2 === "delete"){
+      is_valid = true
+    }
+
+    return is_valid
+  }
+
   return {
     values,
     handleInputChange,
     save,
+    save2,
     onOpenModal,
     onCloseModal
   }

@@ -5,8 +5,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 import './index.css'
 
-import Menu from './components/Menu'
-
 import * as serviceWorker from './serviceWorker'
 
 import store from './redux/store'
@@ -33,9 +31,8 @@ const LayoutDefault = lazy(() => import('./Containers/Layouts/Default'))
 ReactDOM.render(
     <Provider store={store}>
       <Suspense fallback={<div>Loading...</div>}>
-        <LayoutDefault>
-          <Router>
-            <Menu/>
+        <Router>
+          <LayoutDefault>
             <Switch>
               <Redirect from="/" exact to="/teams" />
               <Route path="/users" exact component={Users} />
@@ -46,8 +43,8 @@ ReactDOM.render(
               <Route path="/leagues" exact component={Leagues} />
               <Route path="*" component={Page404}/>
             </Switch>
-          </Router>
-        </LayoutDefault>
+          </LayoutDefault>
+        </Router>
       </Suspense>
     </Provider>,
     document.getElementById('root'))

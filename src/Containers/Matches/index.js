@@ -57,14 +57,14 @@ const mapStateToProps = state => {
   const { leagues } = LeaguesReducer
 
   if( activeLeague === "" ){
-    activeLeague = leagues[0]["id"]
+    activeLeague = leagues[0]["_id"]
   }
 
   let matches2 = matches.filter( ( mat ) => mat.league === activeLeague )
 
   let new_matches = matches2.map( ( mat ) => {
-    const homeTeam = teams.filter( ( tms ) => tms.id === mat.idHome )[0]
-    const awayTeam = teams.filter( ( tms ) => tms.id === mat.idAway )[0]
+    const homeTeam = teams.filter( ( tms ) => tms._id === mat.idHome )[0]
+    const awayTeam = teams.filter( ( tms ) => tms._id === mat.idAway )[0]
 
     const options = [
       { id: "1", value: "idHome", label: `Gana ${homeTeam.name}` },
@@ -72,8 +72,8 @@ const mapStateToProps = state => {
       { id: "3", value: "idHome", label: `Gana ${awayTeam.name}` }
     ]
 
-    const home_next = countries[countries.findIndex( (rl) => rl.id === homeTeam["country"])]["name"]
-    const away_next = countries[countries.findIndex( (rl) => rl.id === awayTeam["country"])]["name"]
+    const home_next = countries[countries.findIndex( (rl) => rl._id === homeTeam["country"])]["name"]
+    const away_next = countries[countries.findIndex( (rl) => rl._id === awayTeam["country"])]["name"]
     return { 
       ...mat,
       home: homeTeam.name,

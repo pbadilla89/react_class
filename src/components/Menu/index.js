@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
 const manuList = [
-  { id: "1", label: "Users", linkTo: "users" },
+  // { id: "1", label: "Users", linkTo: "users" },
   { id: "2", label: "Teams", linkTo: "teams" },
   { id: "3", label: "Table", linkTo: "table" },
   { id: "4", label: "Matches", linkTo: "matches" },
@@ -10,7 +10,7 @@ const manuList = [
   { id: "6", label: "Countries", linkTo: "countries" }
 ]
 
-const Menu = () => {
+const Menu = ({ logOut }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">
@@ -29,6 +29,9 @@ const Menu = () => {
               )
             } )
           }
+          <button className="nav-link" onClick={logOut} >
+            Log Out
+          </button>
         </ul>
       </div>
     </nav>

@@ -60,7 +60,7 @@ const mapStateToProps = state => {
   const { countries } = state.CountriesReducer
 
   leagues = leagues.map( ( leg ) => {
-    const country= countries.filter( ( coun ) => coun.id === leg.country )[0]
+    const country= countries.filter( ( coun ) => coun._id === leg.country )[0]
 
     return { 
       ...leg,
