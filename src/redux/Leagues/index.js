@@ -46,6 +46,8 @@ export default (state = initialState, action) => {
       case RELOAD_LEAGUE:{
         const { blank, listLeague } = action.payload
 
+        console.log(listLeague)
+
         let leagues = [
           ...state.leagues,
           ...listLeague.leagues
@@ -60,7 +62,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           leagues,
-          countries: listLeague.leagues
+          countries: listLeague.countries
         }
       }
       case EDIT_LEAGUE:{

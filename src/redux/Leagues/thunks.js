@@ -23,9 +23,11 @@ export const saveLeague = ( country ) =>  async (dispatch, getState) => {
       'Content-Type': 'application/json'
     }
   }
+
+  console.log(country)
   const res = await post(`${HostApi}/api/addLeague`,country, config)
   console.log(res)
-  dispatch(reloadLeague(res.data, false))
+  dispatch(listLeagues())
 }
 
 export const removeLeague = ( leagues ) =>  async (dispatch, getState) => {

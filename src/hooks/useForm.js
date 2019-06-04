@@ -16,6 +16,8 @@ const useForm = (initialValues, actions = {}) => {
     let is_valid = false
 
     if( validate() ){
+
+      console.log(values)
       
       if(values.action !== "login" && values.action !== "register"){
         if(values.action === "add" && typeof actions.add != "undefined"){
@@ -111,13 +113,7 @@ const useForm = (initialValues, actions = {}) => {
       forState[fields[fi]] = typeof lst != "undefined" ? lst[fields[fi]] : ""
     }
 
-    
-    for(let fi = 0; fi < modal_input.length; fi++){
-      let mi = modal_input[fi]
-      if (mi["type"] === "select"){
-        mi["option"] = values[mi["list"]]
-      }
-    }
+    console.log(modal_input)
 
     setValues({
       ...values,

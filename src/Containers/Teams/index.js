@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux'
-import { addTeam, editTeam, removeTeam } from '../../redux/Teams'
+import { editTeam } from '../../redux/Teams'
+import { saveTeam, listTeams, removeTeam } from '../../redux/Teams/thunks'
 
 import ModalForm from '../../components/Modals/modalForm'
 
@@ -27,7 +28,11 @@ let formState = {
 
 const Teams = (props) => {
 
-  const { addTeam, editTeam, removeTeam, teams, headerTeam, countries, leagues } = props
+  const { addTeam, editTeam, removeTeam, teams, headerTeam, countries, leagues, listTeams } = props
+
+  useEffect(() => {
+    listTeams()
+  }, [])
 
   formState = {
     ...formState,
@@ -47,7 +52,7 @@ const Teams = (props) => {
         </div>
       </div>
       
-      <ModalForm forms={{ values, onCloseModal, handleInputChange, save }} title="Team" />
+      <ModalForm forms={{ values, onCloseModal, handleInputChange, save }} title="Team" option={{countries, leagues}} />
 
       <div className="container">
         <label className="form-control"> List Of Teams </label>
@@ -59,18 +64,14 @@ const Teams = (props) => {
 }
 
 const mapStateToProps = state => {
-  let { teams, headerTeam } = state.TeamsReducer
-  const { countries } = state.CountriesReducer
-  let { leagues } = state.LeaguesReducer
+  let { teams, headerTeam, countries, leagues } = state.TeamsReducer
 
   teams = teams.map( ( tms ) => {
-    const country= countries.filter( ( coun ) => coun._id === tms.country )[0]
-    const league= leagues.filter( ( leg ) => leg._id === tms.league )[0]
 
     return {
       ...tms,
-      country_name: country.name,
-      league_name: league.name
+      country_name: tms.country.name,
+      league_name: tms.league.name
     }
   } )
 
@@ -78,9 +79,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  addTeam,
+  addTeam : saveTeam,
   editTeam,
-  removeTeam
+  removeTeam,
+  listTeams
 }
 
 export default  connect(mapStateToProps, mapDispatchToProps)(Teams)

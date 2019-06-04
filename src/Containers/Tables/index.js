@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux'
 import { changeActiveLeague } from '../../redux/Teams'
+import { listTeams } from '../../redux/Teams/thunks'
 import { refreshMatch } from '../../redux/Matches'
 
 import Table from '../../components/Table'
@@ -10,7 +11,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Tables = (props) => {
 
-  const { teams2, headerTeamTable, leagues, refreshMatch, activeLeague, changeActiveLeague} = props
+  const { teams2, headerTeamTable, leagues, refreshMatch, activeLeague, changeActiveLeague, listTeams} = props
+
+  useEffect(() => {
+    listTeams()
+  }, [])
 
   return (
     <>
@@ -36,35 +41,44 @@ const Tables = (props) => {
       </div>
 
     </>
-  );
+  )
 }
 
 const mapStateToProps = state => {
-  let { teams, headerTeam, activeLeague, headerTeamTable } = state.TeamsReducer
-  const { countries } = state.CountriesReducer
-  const { leagues } = state.LeaguesReducer
+  let { teams, headerTeam, activeLeague, headerTeamTable, countries, leagues } = state.TeamsReducer
 
-  if( activeLeague === "" ){
-    activeLeague = leagues[0]["_id"]
-  }
+  console.log(countries, leagues, teams)
 
-  let teams2 = teams.filter( ( tem ) => tem.league === activeLeague )
+  let teams2 = teams
 
-  teams2 = teams2.map( ( tms, incTms ) => {
+  if(leagues.length > 0){
+    console.log("bien")
 
-    return {
-      ...tms,
-      pos: incTms+1,
-      name_next: countries[countries.findIndex( (rl) => rl._id === tms["country"])]["name"]
+    if( activeLeague === "" ){
+      activeLeague = leagues[0]["_id"]
     }
-  } )
+
+    console.log(teams)
+
+    teams2 = teams.filter( ( tem ) => tem.league._id === activeLeague )
+
+    teams2 = teams2.map( ( tms, incTms ) => {
+
+      return {
+        ...tms,
+        pos: incTms+1,
+        name_next: tms.country.name
+      }
+    } )
+  }
 
   return  { teams2, headerTeam, countries, activeLeague, leagues, headerTeamTable }
 }
 
 const mapDispatchToProps = {
   refreshMatch,
-  changeActiveLeague
+  changeActiveLeague,
+  listTeams
 }
 
 export default  connect(mapStateToProps, mapDispatchToProps)(Tables)

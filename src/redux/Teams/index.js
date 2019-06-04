@@ -1,13 +1,12 @@
-const ADD_TEAM = 'ADD_TEAM'
 const REMOVE_TEAM = 'REMOVE_TEAM'
 const EDIT_TEAM = 'EDIT_TEAM'
+const RELOAD_TEAM = 'RELOAD_TEAM'
 const CHANGE_ACTIVE_LEAGUE = 'CHANGE_ACTIVE_LEAGUE'
 
 const initialState = {
-    teams: [
-        { _id: '1', name: 'Manchester United', pos: 1, pts: 0, country: "2", league: "1", pj: 0, pg: 0, pe: 0, pp: 0 },
-        { _id: '2', name: 'Manchester City', pos: 2, pts: 0, country: "2", league: "1", pj: 0, pg: 0, pe: 0, pp: 0 }
-    ],
+    teams: [],
+    countries: [],
+    leagues: [],
     activeLeague: "",
     headerTeamTable: [
         { id: "pos", label: "Pos" },
@@ -25,20 +24,21 @@ const initialState = {
     ]
 }
 
+export const reloadTeam = ( listTeam, blank = true ) => {
+  return ({
+      type: RELOAD_TEAM,
+      payload: {
+          listTeam,
+          blank
+      }
+  })
+}
+
 export const changeActiveLeague = ( active ) => {
     return ({
         type: CHANGE_ACTIVE_LEAGUE,
         payload: {
             active
-        }
-    })
-}
-
-export const addTeam = ( values ) => {
-    return ({
-        type: ADD_TEAM,
-        payload: {
-            values
         }
     })
 }
@@ -64,6 +64,29 @@ export const removeTeam = ( values ) => {
 export default (state = initialState, action) => {
 
     switch (action.type) {
+      case RELOAD_TEAM:{
+        const { blank, listTeam } = action.payload
+
+        let teams = [
+          ...state.teams,
+          ...listTeam.teams
+        ]
+
+        if(blank) {
+          teams = [
+            ...listTeam.teams
+          ]
+        }
+
+        console.log(listTeam)
+
+        return {
+          ...state,
+          teams,
+          countries: listTeam.countries,
+          leagues: listTeam.leagues
+        }
+      }
         case CHANGE_ACTIVE_LEAGUE:{
 
             let { active } = action.payload
@@ -71,39 +94,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 activeLeague: active
-            }
-        }
-        case ADD_TEAM:{
-
-            let { name, country, league } = action.payload.values
-
-            let { teams } = state
-
-            teams = teams.map( ( lr, indLr ) => {
-                return {
-                    ...lr,
-                    pts: 0,
-                    pj: 0,
-                    pg: 0,
-                    pe: 0,
-                    pp: 0,
-                    id: String( indLr+1 ),
-                    pos: indLr+1
-                }
-            } )
-
-            let newId = 1
-
-            for( let nid = 0; nid < teams.length; nid++ ){
-                newId = parseInt(teams[nid]["id"]) > newId ? parseInt(teams[nid]["id"]) : newId
-            }
-
-            return {
-                ...state,
-                teams:[
-                    ...teams,
-                    { id: String(newId+1), name, pos: (state.teams.length+1), country, pg: 0, pe: 0, pp: 0, pts: 0, pj: 0, league }
-                ]
             }
         }
         case EDIT_TEAM:{

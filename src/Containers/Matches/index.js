@@ -51,37 +51,38 @@ const mapStateToProps = state => {
   let { MatchesReducer, CountriesReducer, TeamsReducer, LeaguesReducer } = state
 
   let { matches } = MatchesReducer
-  let { teams, activeLeague } = TeamsReducer
+  let { teams, activeLeague, leagues, countries } = TeamsReducer
 
-  const { countries } = CountriesReducer
-  const { leagues } = LeaguesReducer
+  let new_matches = matches
 
-  if( activeLeague === "" ){
-    activeLeague = leagues[0]["_id"]
+  if(leagues.length > 0){
+    if( activeLeague === "" ){
+      activeLeague = leagues[0]["_id"]
+    }
+
+    let matches2 = matches.filter( ( mat ) => mat.league === activeLeague )
+
+    new_matches = matches2.map( ( mat ) => {
+      const homeTeam = teams.filter( ( tms ) => tms._id === mat.idHome )[0]
+      const awayTeam = teams.filter( ( tms ) => tms._id === mat.idAway )[0]
+
+      const options = [
+        { id: "1", value: "idHome", label: `Gana ${homeTeam.name}` },
+        { id: "2", value: "none", label: `Empatan` },
+        { id: "3", value: "idHome", label: `Gana ${awayTeam.name}` }
+      ]
+
+      const home_next = countries[countries.findIndex( (rl) => rl._id === homeTeam["country"])]["name"]
+      const away_next = countries[countries.findIndex( (rl) => rl._id === awayTeam["country"])]["name"]
+      return { 
+        ...mat,
+        home: homeTeam.name,
+        away: awayTeam.name,
+        options,
+        home_next,
+        away_next }
+    } )
   }
-
-  let matches2 = matches.filter( ( mat ) => mat.league === activeLeague )
-
-  let new_matches = matches2.map( ( mat ) => {
-    const homeTeam = teams.filter( ( tms ) => tms._id === mat.idHome )[0]
-    const awayTeam = teams.filter( ( tms ) => tms._id === mat.idAway )[0]
-
-    const options = [
-      { id: "1", value: "idHome", label: `Gana ${homeTeam.name}` },
-      { id: "2", value: "none", label: `Empatan` },
-      { id: "3", value: "idHome", label: `Gana ${awayTeam.name}` }
-    ]
-
-    const home_next = countries[countries.findIndex( (rl) => rl._id === homeTeam["country"])]["name"]
-    const away_next = countries[countries.findIndex( (rl) => rl._id === awayTeam["country"])]["name"]
-    return { 
-      ...mat,
-      home: homeTeam.name,
-      away: awayTeam.name,
-      options,
-      home_next,
-      away_next }
-  } )
 
   return {
     ...state,

@@ -1,10 +1,12 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
 
-const ModalForm = ({ forms, title, title2 }) => {
+const ModalForm = ({ forms, title, title2, option }) => {
 
 
     let { values, openModal, onCloseModal, handleInputChange, save, save2 } = forms
+
+    console.log(values)
 
     if (typeof onCloseModal === "undefined")  onCloseModal = () => {}
 
@@ -33,9 +35,9 @@ const ModalForm = ({ forms, title, title2 }) => {
                                                           value={values[mi["id"]]}
                                                           onChange={(e) => { handleInputChange( e.target.value, mi["id"] ) }} >
                                                           <option value=""> Select </option>
-                                                          { mi.option.map( (opt) => {
+                                                          { typeof option[mi["list"]] != "undefined" && option[mi["list"]].length > 0 && option[mi["list"]].map( (opt) => {
                                                               return (
-                                                                  <option key={opt.id} value={opt.id}> {opt.name} </option>
+                                                                  <option key={opt._id} value={opt._id}> {opt.name} </option>
                                                               )
                                                           } ) }
                                                       </select> ) }
@@ -76,7 +78,7 @@ const ModalForm = ({ forms, title, title2 }) => {
                                                             <option value=""> Select </option>
                                                             { mi.option.map( (opt) => {
                                                                 return (
-                                                                    <option key={opt.id} value={opt.id}> {opt.name} </option>
+                                                                    <option key={opt._id} value={opt._id}> {opt.name} </option>
                                                                 )
                                                             } ) }
                                                         </select> ) }

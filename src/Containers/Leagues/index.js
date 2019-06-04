@@ -32,11 +32,6 @@ const Leagues = (props) => {
     listLeagues()
   }, [])
 
-  formState = {
-    ...formState,
-    countries
-  }
-
   const { values, onOpenModal, onCloseModal, handleInputChange, save } = useForm(formState, {add: addLeague, edit: editLeague, delete: removeLeague});
 
 
@@ -49,7 +44,7 @@ const Leagues = (props) => {
         </div>
       </div>
       
-      <ModalForm forms={{ values, onCloseModal, handleInputChange, save }} title="League" />
+      <ModalForm forms={{ values, onCloseModal, handleInputChange, save }} option={{countries}} title="League" />
 
       <div className="container">
         <label className="form-control"> Leagues </label>
@@ -63,13 +58,13 @@ const Leagues = (props) => {
 const mapStateToProps = state => {
   let { leagues, headerLeague, countries } = state.LeaguesReducer
 
+  console.log(countries)
+
   leagues = leagues.map( ( leg ) => {
-    console.log(leg)
-    const country = countries.filter( ( coun ) => coun._id === leg.country )[0]
 
     return { 
       ...leg,
-      country_name: country["name"] }
+      country_name: leg.country.name }
   } )
 
   return  { leagues, headerLeague, countries }
