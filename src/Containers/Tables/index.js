@@ -3,7 +3,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { changeActiveLeague } from '../../redux/Teams'
 import { listTeams } from '../../redux/Teams/thunks'
-import { refreshMatch } from '../../redux/Matches'
+
+import { reloadMatch} from '../../redux/Matches/thunks'
 
 import Table from '../../components/Table'
 
@@ -11,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Tables = (props) => {
 
-  const { teams2, headerTeamTable, leagues, refreshMatch, activeLeague, changeActiveLeague, listTeams} = props
+  const { teams2, headerTeamTable, leagues, reloadMatch, activeLeague, changeActiveLeague, listTeams} = props
 
   useEffect(() => {
     listTeams()
@@ -31,7 +32,7 @@ const Tables = (props) => {
 
       <div className="col-6 offset-3 mb-3 mt-3">
         <div className="btn-group d-flex" role="group">
-          <button className="btn btn-success" onClick={ () => { refreshMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
+          <button className="btn btn-success" onClick={ () => { reloadMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
         </div>
       </div>
 
@@ -76,7 +77,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  refreshMatch,
+  reloadMatch,
   changeActiveLeague,
   listTeams
 }

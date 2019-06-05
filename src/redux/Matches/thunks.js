@@ -1,6 +1,7 @@
 import {
   refreshMatch
 } from './index'
+import { listTeams } from '../../redux/Teams/thunks'
 
 import { post } from 'axios'
 
@@ -32,4 +33,16 @@ export const playMatch = ( values, whoWin ) =>  async (dispatch, getState) => {
 
   const res = await post(`${HostApi}/api/playMatch`,{match: lst}, config)
   dispatch(listMatches())
+}
+
+export const reloadMatch = ( ) =>  async (dispatch, getState) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  const res = await post(`${HostApi}/api/refreshMatch`,{}, config)
+  dispatch(listMatches())
+  dispatch(listTeams())
 }

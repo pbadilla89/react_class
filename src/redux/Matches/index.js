@@ -72,7 +72,7 @@ export default (state = initialState, action) => {
             const options = [
               { id: "1", value: "idHome", label: `Gana ${homeTeam.name}` },
               { id: "2", value: "none", label: `Empatan` },
-              { id: "3", value: "idHome", label: `Gana ${awayTeam.name}` }
+              { id: "3", value: "idAway", label: `Gana ${awayTeam.name}` }
             ]
       
             const home_next = ""

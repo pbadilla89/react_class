@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux'
-import { refreshMatch, changeActiveLeague } from '../../redux/Matches'
-import { listMatches, playMatch } from '../../redux/Matches/thunks'
+import { changeActiveLeague } from '../../redux/Matches'
+import { listMatches, playMatch , reloadMatch} from '../../redux/Matches/thunks'
 
 import ModalOption from '../../components/Modals/modalOption'
 
@@ -17,7 +17,7 @@ const formState = {
 
 const Matches = (props) => {
 
-  const { refreshMatch, playMatch, MatchesReducer, LeaguesReducer, activeLeague, changeActiveLeague, listMatches} = props
+  const { reloadMatch, playMatch, MatchesReducer, LeaguesReducer, activeLeague, changeActiveLeague, listMatches} = props
 
   const { values, onCloseModal, save, onOpenModal } = useOption(formState, playMatch);
 
@@ -39,7 +39,7 @@ const Matches = (props) => {
       </select>
     </div>
     <div className="col-6 offset-3 mb-3 mt-3">
-      <button className="btn btn-success w-100" onClick={ () => { refreshMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
+      <button className="btn btn-success w-100" onClick={ () => { reloadMatch() } }> <FontAwesomeIcon icon={["fas", "sync-alt"]} /> </button>
     </div>
     <div className="container">
       <label className="form-control"> Results / Fixtures </label>
@@ -59,7 +59,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  refreshMatch,
+  reloadMatch,
   playMatch,
   changeActiveLeague,
   listMatches

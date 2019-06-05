@@ -44,7 +44,7 @@ const Table = ({ list = [], headers = [], forms = {}, action, minList = 0, relat
                     <button className={ `btn btn-danger w-100 ${list.length <= minList ? "d-none": indLst < fix ? "d-none" : "" }` } onClick={ () => { onOpenModal("delete", lst) } }> <FontAwesomeIcon icon={["far", "trash-alt"]} /> </button>
                   </div>)
                   : action === "Mathes" ? (
-                  <button className={ `btn btn-info ${lst.win >= 0 ? "d-none": "" }` } onClick={ () => { onOpenModal( lst, indLst ) } } > <FontAwesomeIcon icon={["fas", "gamepad"]} /> </button>)
+                  <button className={ `btn btn-info ${lst.win != "-1" ? "d-none": "" }` } onClick={ () => { onOpenModal( lst, indLst ) } } > <FontAwesomeIcon icon={["fas", "gamepad"]} /> </button>)
                   : ""
                 }
               </td>
