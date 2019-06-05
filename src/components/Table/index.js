@@ -21,10 +21,14 @@ const Table = ({ list = [], headers = [], forms = {}, action, minList = 0, relat
           return (
             <tr key={lst._id} >
               { headers.map( (hdr, indHdr) => {
-                  let classWin = lst.idHome === lst.win && hdr.id === "home" ? "winner": ""
-                  classWin = lst.idAway === lst.win && hdr.id === "away" ? "winner": classWin
+                  let classWin = ""
+                  
+                  if (typeof lst.idHome != "undefined"){
+                    classWin = lst.idHome._id === lst.win && hdr.id === "home" ? "winner": classWin
+                    classWin = lst.idAway._id === lst.win && hdr.id === "away" ? "winner": classWin
 
-                  classWin = lst.win === "0" ? "tied" : classWin
+                    classWin = lst.win === "0" ? "tied" : classWin
+                  }
 
                   return (<td key={indHdr} className={`${classWin} h4`} > 
                     { lst[hdr.id] } 

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux'
-import { refreshMatch, playMatch, changeActiveLeague } from '../../redux/Matches'
+import { refreshMatch, changeActiveLeague } from '../../redux/Matches'
+import { listMatches, playMatch } from '../../redux/Matches/thunks'
 
 import ModalOption from '../../components/Modals/modalOption'
 
@@ -16,9 +17,13 @@ const formState = {
 
 const Matches = (props) => {
 
-  const { refreshMatch, playMatch, MatchesReducer, LeaguesReducer, activeLeague, changeActiveLeague} = props
+  const { refreshMatch, playMatch, MatchesReducer, LeaguesReducer, activeLeague, changeActiveLeague, listMatches} = props
 
   const { values, onCloseModal, save, onOpenModal } = useOption(formState, playMatch);
+
+  useEffect(() => {
+    listMatches()
+  }, [])
 
   const { matches, headerMatch } = MatchesReducer
   const { leagues } = LeaguesReducer
@@ -28,7 +33,7 @@ const Matches = (props) => {
       <select className="form-control" value={ activeLeague } onChange={ (e) => { changeActiveLeague(e.target.value) }} >
         {
           leagues.map( ( leg, indLeg ) => {
-            return ( <option key={indLeg} value={leg.id} > { leg.name } </option> )
+            return ( <option key={indLeg} value={leg._id} > { leg.name } </option> )
           } )
         }
       </select>
@@ -48,59 +53,16 @@ const Matches = (props) => {
 
 const mapStateToProps = state => {
 
-  let { MatchesReducer, CountriesReducer, TeamsReducer, LeaguesReducer } = state
-
-  let { matches } = MatchesReducer
-  let { teams, activeLeague, leagues, countries } = TeamsReducer
-
-  let new_matches = matches
-
-  if(leagues.length > 0){
-    if( activeLeague === "" ){
-      activeLeague = leagues[0]["_id"]
-    }
-
-    let matches2 = matches.filter( ( mat ) => mat.league === activeLeague )
-
-    new_matches = matches2.map( ( mat ) => {
-      const homeTeam = teams.filter( ( tms ) => tms._id === mat.idHome )[0]
-      const awayTeam = teams.filter( ( tms ) => tms._id === mat.idAway )[0]
-
-      const options = [
-        { id: "1", value: "idHome", label: `Gana ${homeTeam.name}` },
-        { id: "2", value: "none", label: `Empatan` },
-        { id: "3", value: "idHome", label: `Gana ${awayTeam.name}` }
-      ]
-
-      const home_next = countries[countries.findIndex( (rl) => rl._id === homeTeam["country"])]["name"]
-      const away_next = countries[countries.findIndex( (rl) => rl._id === awayTeam["country"])]["name"]
-      return { 
-        ...mat,
-        home: homeTeam.name,
-        away: awayTeam.name,
-        options,
-        home_next,
-        away_next }
-    } )
-  }
-
   return {
     ...state,
-    MatchesReducer: {
-      ...state.MatchesReducer,
-      matches: new_matches
-    },
-    TeamsReducer: {
-      ...state.TeamsReducer,
-      activeLeague
-    }
   }
 }
 
 const mapDispatchToProps = {
   refreshMatch,
   playMatch,
-  changeActiveLeague
+  changeActiveLeague,
+  listMatches
 }
 
 export default  connect(mapStateToProps, mapDispatchToProps)(Matches)

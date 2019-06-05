@@ -33,7 +33,6 @@ export const registerUser = ( users ) =>  async (dispatch, getState) => {
   const { email2, password2, name2, lastname2 } = users
 
   const res = await post(`${HostApi}/api/addUser`, { email: email2, password: password2, name: name2, lastname: lastname2, role: "admin" }, config)
-  console.log(res)
   if(res.data.status){
     alert("Esta Registrado, ahora puede logearse")
   }
@@ -49,7 +48,6 @@ export const validateSession = ( ) => async (dispatch, getState) => {
     }
     dispatch(changeLoading( true ))
     const res = await post(`${HostApi}/api/validateSession`, { token: localStorage.getItem("token") }, config)
-    console.log(res)
     if(res.data.status){
       dispatch(logIn())
     } else {

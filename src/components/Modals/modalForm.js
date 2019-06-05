@@ -6,8 +6,6 @@ const ModalForm = ({ forms, title, title2, option }) => {
 
     let { values, openModal, onCloseModal, handleInputChange, save, save2 } = forms
 
-    console.log(values)
-
     if (typeof onCloseModal === "undefined")  onCloseModal = () => {}
 
     return (
