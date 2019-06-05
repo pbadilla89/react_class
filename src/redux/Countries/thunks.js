@@ -9,7 +9,8 @@ const HostApi = "http://andbytes.com:2889"
 export const listCountries = () =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
   const res = await post(`${HostApi}/api/listcountries`,{}, config)
@@ -20,7 +21,8 @@ export const listCountries = () =>  async (dispatch, getState) => {
 export const saveCountry = ( country ) =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
   const res = await post(`${HostApi}/api/addCountry`,country, config)
@@ -31,7 +33,8 @@ export const saveCountry = ( country ) =>  async (dispatch, getState) => {
 export const removeCountry = ( countries ) =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
   const res = await post(`${HostApi}/api/removeCountry`, countries.lst, config)

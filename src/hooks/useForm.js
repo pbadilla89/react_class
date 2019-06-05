@@ -141,11 +141,15 @@ const useForm = (initialValues, actions = {}) => {
 
     for(let fi = 0; fi < fields.length; fi++){
 
-      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const regex =  /^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/
 
       if( fields[fi] === "email" ){
-        not_valid += regex.test(values[fields[fi]]) ? 0 : 1
-        alert("Email invalido")
+        const validEmail = regex.test(values[fields[fi]])
+        not_valid += validEmail ? 0 : 1
+
+        if(!validEmail){
+          alert("Email invalido")
+        }
       } else {
         not_valid += values[fields[fi]] !== "" ? 0 : 1
       }
@@ -168,11 +172,15 @@ const useForm = (initialValues, actions = {}) => {
     let not_valid = 0
 
     for(let fi = 0; fi < fields2.length; fi++){
-      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const regex =  /^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/
 
       if( fields2[fi] === "email2" ){
-        not_valid += regex.test(values[fields2[fi]]) ? 0 : 1
-        alert("Email invalido")
+        const validEmail = regex.test(values[fields2[fi]])
+        not_valid += validEmail ? 0 : 1
+
+        if(!validEmail){
+          alert("Email invalido")
+        }
       } else {
         not_valid += values[fields2[fi]] !== "" ? 0 : 1
       }

@@ -9,7 +9,8 @@ const HostApi = "http://andbytes.com:2889"
 export const listTeams = () =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
   const res = await post(`${HostApi}/api/listTeams`,{}, config)
@@ -20,7 +21,8 @@ export const listTeams = () =>  async (dispatch, getState) => {
 export const saveTeam = ( country ) =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
 
@@ -33,7 +35,8 @@ export const saveTeam = ( country ) =>  async (dispatch, getState) => {
 export const removeTeam = ( teams ) =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
   const res = await post(`${HostApi}/api/removeTeam`, teams.lst, config)

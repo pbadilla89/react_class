@@ -1,20 +1,8 @@
 const REFRESH_MATCH = 'REFRESH_MATCH'
-const PLAY_MATCH = 'PLAY_MATCH'
 const REMOVE_TEAM = 'REMOVE_TEAM'
 const ADD_TEAM = 'ADD_TEAM'
 const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
 const REMOVE_LEAGUE = 'REMOVE_LEAGUE'
-
-const calculateScore = ( { tied, play, win, lose, tms } ) => {
-  return {
-    ...tms,
-    pj: play.includes(tms.id) ? tms.pj+1 : tms.pj,
-    pe: tied.includes(tms.id) ? tms.pe+1 : tms.pe,
-    pg: win.includes(tms.id)  ? tms.pg+1 : tms.pg,
-    pp: lose.includes(tms.id)  ? tms.pp+1 : tms.pp,
-    pts: tied.includes(tms.id) ? tms.pts+1 : win.includes(tms.id)  ? tms.pts+3 : tms.pts
-  }
-}
 
 const crossSliceReducer = (state, action) => {
   let now_type = action.type

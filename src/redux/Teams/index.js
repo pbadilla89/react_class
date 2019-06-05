@@ -78,11 +78,11 @@ export default (state = initialState, action) => {
           ]
         }
 
-        console.log(listTeam)
+        let inOrder = teams.sort((a, b) => (a.pts < b.pts) ? 1 : -1)
 
         return {
           ...state,
-          teams,
+          teams: inOrder,
           countries: listTeam.countries,
           leagues: listTeam.leagues
         }

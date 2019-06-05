@@ -10,7 +10,8 @@ const HostApi = "http://andbytes.com:2889"
 export const listMatches = () =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
   const res = await post(`${HostApi}/api/listMatches`,{}, config)
@@ -20,7 +21,8 @@ export const listMatches = () =>  async (dispatch, getState) => {
 export const playMatch = ( values, whoWin ) =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
 
@@ -31,18 +33,19 @@ export const playMatch = ( values, whoWin ) =>  async (dispatch, getState) => {
   console.log(lst)
   console.log(whoWin)
 
-  const res = await post(`${HostApi}/api/playMatch`,{match: lst}, config)
+  await post(`${HostApi}/api/playMatch`,{match: lst}, config)
   dispatch(listMatches())
 }
 
 export const reloadMatch = ( ) =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
 
-  const res = await post(`${HostApi}/api/refreshMatch`,{}, config)
+  await post(`${HostApi}/api/refreshMatch`,{}, config)
   dispatch(listMatches())
   dispatch(listTeams())
 }

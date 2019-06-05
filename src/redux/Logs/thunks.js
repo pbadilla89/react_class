@@ -40,7 +40,7 @@ export const registerUser = ( users ) =>  async (dispatch, getState) => {
 }
 
 export const validateSession = ( ) => async (dispatch, getState) => {
-  if(localStorage.getItem("token") && localStorage.getItem("token") != "undefined"){
+  if(localStorage.getItem("token") && localStorage.getItem("token") !== "undefined"){
     const config = {
       headers: {
         'Content-Type': 'application/json'

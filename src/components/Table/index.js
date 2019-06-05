@@ -40,11 +40,11 @@ const Table = ({ list = [], headers = [], forms = {}, action, minList = 0, relat
               <td > 
                 { action === "form" ? (
                   <div className="btn-group d-flex" role="group">
-                    <button className={ `btn btn-warning w-100` } onClick={ () => { onOpenModal("edit", lst) } }> <FontAwesomeIcon icon={["fas", "pencil-alt"]} /> </button>
-                    <button className={ `btn btn-danger w-100 ${list.length <= minList ? "d-none": indLst < fix ? "d-none" : "" }` } onClick={ () => { onOpenModal("delete", lst) } }> <FontAwesomeIcon icon={["far", "trash-alt"]} /> </button>
+                    <button className={ `btn btn-warning w-100 d-none` } onClick={ () => { onOpenModal("edit", lst) } }> <FontAwesomeIcon icon={["fas", "pencil-alt"]} /> </button>
+                    <button className={ `btn btn-danger w-100 d-none ${list.length <= minList ? "d-none": indLst < fix ? "d-none" : "" }` } onClick={ () => { onOpenModal("delete", lst) } }> <FontAwesomeIcon icon={["far", "trash-alt"]} /> </button>
                   </div>)
                   : action === "Mathes" ? (
-                  <button className={ `btn btn-info ${lst.win != "-1" ? "d-none": "" }` } onClick={ () => { onOpenModal( lst, indLst ) } } > <FontAwesomeIcon icon={["fas", "gamepad"]} /> </button>)
+                  <button className={ `btn btn-info ${lst.win !== "-1" ? "d-none": "" }` } onClick={ () => { onOpenModal( lst, indLst ) } } > <FontAwesomeIcon icon={["fas", "gamepad"]} /> </button>)
                   : ""
                 }
               </td>

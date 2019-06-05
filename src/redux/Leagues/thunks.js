@@ -9,7 +9,8 @@ const HostApi = "http://andbytes.com:2889"
 export const listLeagues = () =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
   const res = await post(`${HostApi}/api/listleagues`,{}, config)
@@ -20,7 +21,8 @@ export const listLeagues = () =>  async (dispatch, getState) => {
 export const saveLeague = ( country ) =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
 
@@ -33,7 +35,8 @@ export const saveLeague = ( country ) =>  async (dispatch, getState) => {
 export const removeLeague = ( leagues ) =>  async (dispatch, getState) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth': localStorage.getItem("token")
     }
   }
   const res = await post(`${HostApi}/api/removeLeague`, leagues.lst, config)

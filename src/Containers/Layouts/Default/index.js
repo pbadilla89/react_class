@@ -37,7 +37,7 @@ let formState = {
 
 const LayoutDefault = (props) => {
 
-  const { loginUser, registerUser, children, isLogin, openModal, validateSession, logOut, is_loading, changeLoading } = props
+  const { loginUser, registerUser, children, isLogin, openModal, validateSession, logOut, is_loading } = props
 
   const { values, handleInputChange, save, save2 } = useForm(formState, {login: loginUser, register: registerUser});
 
