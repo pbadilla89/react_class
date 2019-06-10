@@ -1,7 +1,7 @@
 import React,{ useEffect } from 'react';
 
 import { connect } from 'react-redux'
-import { editCountry } from '../../redux/Countries'
+// import { editCountry } from '../../redux/Countries'
 
 import { listCountries, saveCountry, removeCountry } from '../../redux/Countries/thunks'
 
@@ -58,7 +58,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   addCountry : saveCountry,
-  editCountry,
+  editCountry : saveCountry,
   removeCountry,
   listCountries
 }

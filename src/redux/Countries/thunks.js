@@ -25,9 +25,18 @@ export const saveCountry = ( country ) =>  async (dispatch, getState) => {
       'auth': localStorage.getItem("token")
     }
   }
-  const res = await post(`${HostApi}/api/addCountry`,country, config)
+
+  const params = {
+    name: country.name
+  }
+
+  if( typeof country.lst != "undefined"){
+    params._id = country.lst._id
+  }
+
+  const res = await post(`${HostApi}/api/saveCountry`,params, config)
   console.log(res)
-  dispatch(reloadCountry(res.data, false))
+  dispatch(listCountries())
 }
 
 export const removeCountry = ( countries ) =>  async (dispatch, getState) => {
